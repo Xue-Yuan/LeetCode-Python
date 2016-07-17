@@ -4,8 +4,9 @@ class Solution(object):
         :type n: int
         :rtype: List[str]
         """
-        ret = []
-        def dfs(l, r, cur):
+        #the default will be evaluated only once and be shared with
+        # subsequent calls
+        def dfs(l, r, cur, ret=[]):
             if r == n:
                 ret.append(cur)
             if l < n:
