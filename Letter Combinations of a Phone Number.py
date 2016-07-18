@@ -33,6 +33,7 @@ class Solution(object):
 
 #A Pyhonic solution, from leetcode discussion
 # https://discuss.leetcode.com/topic/11783/one-line-python-solution/2
+# BFS
 class Solution(object):
     def letterCombinations(self, digits):
         if digits == '':
