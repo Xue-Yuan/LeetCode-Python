@@ -1,3 +1,6 @@
+#https://discuss.leetcode.com/topic/31565/the-longest-absolute-path-in-file-system/13
+
+
 #recursive solution
 class Solution(object):
 
