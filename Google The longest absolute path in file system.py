@@ -35,15 +35,15 @@ class Solution2(object):
 
     def longest_absolute_path(self, fpth):
         files = fpth.split('\n')
-        stk = [(-1, -1)]
+        stk = [(0, -1)]
         max_len, prev_lvl = 0, -1
         for file in files:
-            cur_lvl = file.count('\t')
-            file = file.lstrip('\t')
+            cur_lvl = file.count(' ')
+            file = file.lstrip(' ')
             while cur_lvl <= stk[-1][1]:
                 stk.pop()
             cur_len = stk[-1][0]+len(file)+1
-            if '.' in file:
+            if file.endswith(('.jpeg', '.txt', '.gif')):
                 max_len = max(max_len, cur_len)
             stk.append((cur_len, cur_lvl))
         return max_len

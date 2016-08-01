@@ -23,7 +23,7 @@ class Solution(object):
     def insert(self, root, val):
         if not root:
             return TreeNode(val), 0
-        if val == root:
+        if val == root.val:
             ret = root.left.cnt if root.left else 0
         elif val > root.val:
             tmp = root.cnt - (root.right.cnt if root.right else 0)
@@ -36,7 +36,7 @@ class Solution(object):
 
 
 # Taken from https://discuss.leetcode.com/topic/31162/mergesort-solution
-class Solution(object):
+class Solution2(object):
     def countSmaller(self, nums):
         def sort(enum):
             half = len(enum) / 2
