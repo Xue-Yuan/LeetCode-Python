@@ -1,5 +1,6 @@
 class Solution(object):
-    """Accumulate layer up.
+    """Accumulate layer up. Take a look at the problem
+        Largest Rectangle in Histogram
     """
     def trap(self, height):
         """
