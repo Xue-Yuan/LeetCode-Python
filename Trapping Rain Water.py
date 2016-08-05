@@ -1,3 +1,5 @@
+#essentially the same problem as the Largest Rectangel in Histogram and Maximal Rectangel
+
 class Solution(object):
     """Accumulate layer up. Take a look at the problem
         Largest Rectangle in Histogram
