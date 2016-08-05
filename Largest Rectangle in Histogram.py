@@ -38,33 +38,13 @@ class Solution(object):
         :type heights: List[int]
         :rtype: int
         """
-        idx, stk, ret = 0, [], 0
-        while idx < len(heights):
-            if not stk or heights[idx] >= heights[stk[-1]]:
-                stk.append(idx)
-                idx += 1
-            else:
-                cur = stk.pop()
-                width = idx if not stk else idx - stk[-1] - 1
-                ret = max(ret, width * heights[cur])
-        while stk:
-            cur = stk.pop()
-            width = idx if not stk else idx - stk[-1] - 1
-            ret = max(ret, width * heights[cur])
+        heights.append(0)
+        stk, ret = [], 0
+        for idx, height in enumerate(heights):
+            while stk and height < heights[stk[-1]]:
+                h = heights[stk.pop()]
+                w = idx if not stk else idx - stk[-1] - 1
+                ret = max(ret, w*h)
+            stk.append(idx)
+        heights.pop()
         return ret
-
-
-#slick as hell
-class Solution2(object):
-    def largestRectangleArea(self, height):
-    height.append(0)
-    stack = [-1]
-    ans = 0
-    for i in xrange(len(height)):
-        while height[i] < height[stack[-1]]:
-            h = height[stack.pop()]
-            w = i - stack[-1] - 1
-            ans = max(ans, h * w)
-        stack.append(i)
-    height.pop()
-    return ans
