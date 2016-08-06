@@ -6,15 +6,14 @@
 #         self.right = None
 
 class Solution(object):
-    def zigzagLevelOrder(self, root):
+    def levelOrderBottom(self, root):
         """
         :type root: TreeNode
         :rtype: List[List[int]]
         """
         ret, lvl = [], [root] if root else []
-        dirc = 1
         while lvl:
-            ret += [node.val for node in lvl[::dirc]],
+            ret += [node.val for node in lvl],
             lvl = [child for node in lvl for child in (node.left, node.right) if child]
-            dirc = -dirc
+        ret.reverse()
         return ret
