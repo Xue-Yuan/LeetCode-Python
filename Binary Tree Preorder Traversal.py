@@ -20,3 +20,21 @@ class Solution(object):
             root = stk.pop()
             root = root.right
         return ret
+
+
+class Solution2(object):
+    def preorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        stk = [root] if root else []
+        ret = []
+        while stk:
+            cur = stk.pop()
+            ret.append(cur.val)
+            if cur.right:
+                stk.append(cur.right)
+            if cur.left:
+                stk.append(cur.left)
+        return ret

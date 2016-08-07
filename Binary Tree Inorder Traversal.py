@@ -23,7 +23,7 @@ class Solution(object):
         return ret
 
 
-class Solution(object):
+class Solution2(object):
     def inorderTraversal(self, root):
         """
         :type root: TreeNode
