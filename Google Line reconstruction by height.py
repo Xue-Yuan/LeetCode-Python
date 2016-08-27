@@ -1,6 +1,10 @@
+#coding: utf-8
 '''https://discuss.leetcode.com/topic/24320/line-reconstruction-by-height
 
-Suppose you have a line of n people in which the k-th person is described by a pair (h,t) , where h is the height of the k-th person and t is the number of people in front of k who have a height greater or equal than h . Write an algorithm to reconstruct the line.
+Suppose you have a line of n people in which the k-th person is described
+by a pair (h,t) , where h is the height of the k-th person and t is the
+number of people in front of k who have a height greater or equal than h.
+Write an algorithm to reconstruct the line.
 
 For example, if the line is composed by the following people:
 
@@ -21,6 +25,23 @@ Think about why we should sort the array in descending order by height,
 '''
 
 
+#solution from careercup:
+
+# 1.Sort by "NumberOfTall" and "height":
+# (1)those who have fewer people taller in front of them have smaller
+# index;
+# (2)for those having same number of tallers in front, the taller his
+# own height is, the smaller index he has.
+
+def solution(line):
+    line.sort(key=lambda x: (-x[0], x[1]))
+    ans = []
+    for h, t in line:
+        ans.insert(t, (h, t))
+    return ans
+
+
+# Use a BT to optimize the time complexity to O(nlog(n))
 class TreeNode(object):
 
     def __init__(self, person):
@@ -61,8 +82,11 @@ class Soltuion(object):
         for person in self.inorder(root.right):
             yield person
 
-
-if __name__ == 'main':
+if __name__ == '__main__':
     line = [(7, 0), (4, 4), (7, 1), (5, 0), (6, 1), (5, 2)]
-    s = Soltuion()
-    print s.line_reconstruction(line)
+    print Soltuion().line_reconstruction(line)
+    print solution(line)
+    line2 = [(11, 0), (10, 0), (6, 2), (5, 1), (4, 0), (1, 4)]
+    print Soltuion().line_reconstruction(line2)
+    print solution(line2)
+
