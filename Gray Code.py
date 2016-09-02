@@ -1,19 +1,10 @@
 class Solution(object):
-    def subsetsWithDup(self, nums):
+    def grayCode(self, n):
         """
-        :type nums: List[int]
-        :rtype: List[List[int]]
+        :type n: int
+        :rtype: List[int]
         """
-        nums.sort()
-        ret, path = [], []
-
-        def dfs(nums, beg):
-            ret.append(path[:])
-            for idx in range(beg, len(nums)):
-                if beg == idx or nums[idx] != nums[idx-1]:
-                    path.append(nums[idx])
-                    dfs(nums, idx+1)
-                    path.pop()
-
-        dfs(nums, 0)
+        ret = []
+        for i in range(1 << n):
+            ret.append(i ^ (i >> 1))
         return ret
