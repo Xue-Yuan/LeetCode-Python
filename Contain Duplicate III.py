@@ -1,4 +1,8 @@
 # https://discuss.leetcode.com/topic/27608/java-python-one-pass-solution-o-n-time-o-n-space-using-buckets
+"""n-t, n, n+t will be mapped into the same bucket.
+"""
+
+
 class Solution(object):
     def containsNearbyAlmostDuplicate(self, nums, k, t):
         """
