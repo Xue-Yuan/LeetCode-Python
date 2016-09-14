@@ -9,7 +9,7 @@ class Solution(object):
         pathsaver = collections.defaultdict(list)
         w_len = len(beginWord)
         cur = set([beginWord])
-        charset = list(string.lowercase)
+        charset = string.lowercase
         wordlist.add(endWord)
         wordlist.discard(beginWord)
         while cur:
@@ -55,8 +55,6 @@ class Solution2(object):
         :type wordlist: Set[str]
         :rtype: List[List[str]]
         """
-        import string
-        import collections
         pathsaver = collections.defaultdict(list)
         w_len = len(beginWord)
         front, back = set([beginWord]), set([endWord])
