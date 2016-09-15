@@ -1,10 +1,8 @@
 class BinaryIndexedTree(object):
     def __init__(self, matrix):
         m, n = len(matrix), len(matrix[0]) if matrix else 0
-
         self.matrix = matrix
         self.BIT = [[0] * (n + 1) for _ in range(m + 1)]
-
         for r in range(m):
             for c in range(n):
                 self._add(r+1, c+1, matrix[r][c])
