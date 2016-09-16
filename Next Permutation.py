@@ -16,5 +16,4 @@ class Solution(object):
                 if nums[k] < nums[i]:
                     l = i
             nums[k], nums[l] = nums[l], nums[k]
-            print k, l
             nums[:] = nums[:k+1] + nums[:k:-1]

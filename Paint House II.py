@@ -1,3 +1,8 @@
+"""Record the minimal two of the previous row so we don't need to
+scan for the minimal, by which the time complexity O(nk) can be made.
+"""
+
+
 class Solution(object):
     def minCostII(self, costs):
         """
