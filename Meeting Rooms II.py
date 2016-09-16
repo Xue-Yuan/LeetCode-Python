@@ -24,7 +24,7 @@ class Solution(object):
             if interval.start >= pq[0]:
                 heapq.heappop(pq)
             heapq.heappush(pq, interval.end)
-        return len(pq)
+        return len(pq) if intervals else 0
 
 
 if __name__ == "__main__":
