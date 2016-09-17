@@ -35,20 +35,29 @@ class Solution(object):
         return root, ret
 
 
-# Taken from https://discuss.leetcode.com/topic/31162/mergesort-solution
 class Solution2(object):
     def countSmaller(self, nums):
-        def sort(enum):
-            half = len(enum) / 2
-            if half:
-                left, right = sort(enum[:half]), sort(enum[half:])
-                for i in range(len(enum))[::-1]:
-                    if not right or left and left[-1][1] > right[-1][1]:
-                        smaller[left[-1][0]] += len(right)
-                        enum[i] = left.pop()
-                    else:
-                        enum[i] = right.pop()
-            return enum
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
         smaller = [0] * len(nums)
-        sort(list(enumerate(nums)))
+        self._mergeSort(list(enumerate(nums)), smaller)
         return smaller
+
+    def _mergeSort(self, nums, smaller):
+        mid = len(nums) / 2
+        if mid:
+            left = self._mergeSort(nums[:mid], smaller)
+            right = self._mergeSort(nums[mid:], smaller)
+            i = j = 0
+            while i < len(left) or j < len(right):
+                if j == len(right) or i < len(left) and left[i][1] < right[j][1]:
+                    nums[i+j] = left[i]
+                    smaller[left[i][0]] += j
+                    i += 1
+                else:
+                    nums[i+j] = right[j]
+                    j += 1
+        return nums
+
