@@ -29,15 +29,15 @@ class Solution(object):
         :type nestedList: List[NestedInteger]
         :rtype: int
         """
-        def _dfs(ni, lvl, _sum):
+        def _dfs(ni, lvl):
             if ni.isInteger():
-                return _sum + ni.getInteger()*lvl
-            return sum(_dfs(nxt, lvl+1, _sum) for nxt in ni.getList())
-        return sum(_dfs(ni, 1, 0) for ni in nestedList)
+                return ni.getInteger()*lvl
+            return sum(_dfs(nxt, lvl+1) for nxt in ni.getList())
+        return sum(_dfs(ni, 1) for ni in nestedList)
 
 
 # DFS. Expand all the children at once, instead of keep it as an iterator.
-class Solution(object):
+class Solution2(object):
     def depthSum(self, nestedList):
         stk = [(ni, 1) for ni in nestedList]
         s = 0
