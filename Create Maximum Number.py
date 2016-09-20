@@ -23,20 +23,12 @@ class Solution(object):
             stk.append(num)
         return stk[:n]
 
-    #Fails when there is a tie
     def _merge(self, nums1, nums2):
-        ans, idx1, idx2 = [], 0, 0
-        while idx1 < len(nums1) and idx2 < len(nums2):
-            if nums1[idx1] < nums2[idx2]:
-                idx1, idx2 = idx2, idx1
-                nums1, nums2 = nums2, nums1
-            ans.append(nums1[idx1])
-            idx1 += 1
-        ans += nums1[idx1:] + nums2[idx2:]
+        ans = []
+        while nums1 or nums2:
+            ans.append(max(nums1, nums2).pop(0))
         return ans
-    # This one works
-    # def _merge(self, a, b):
-    #     return [max(a, b).pop(0) for _ in a+b]
+
 
 if __name__ == '__main__':
     nums1 = [3, 4, 6, 5]
