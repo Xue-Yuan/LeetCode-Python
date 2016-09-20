@@ -9,9 +9,10 @@ class Solution(object):
         def _dfs(start, end, remain):
             if not remain:
                 ans.append(path[:])
-            for cur in range(start, end):
-                path.append(cur)
-                _dfs(cur+1, end, remain-1)
-                path.pop()
+            if end-start >= remain:
+                for cur in range(start, end):
+                    path.append(cur)
+                    _dfs(cur+1, end, remain-1)
+                    path.pop()
         _dfs(1, n+1, k)
         return ans
