@@ -11,7 +11,7 @@ class Solution(object):
     
     def kth(self, n1, n2, k):
         if len(n1) > len(n2):
-            return self.kth(n2, n1, k)
+            n1, n2 = n2, n1
         if not n1:
             return n2[k-1]
         if k == 1:
@@ -19,7 +19,6 @@ class Solution(object):
         i = min(len(n1), k//2)
         j = k - i
         if n1[i-1] > n2[j-1]:
-            return self.kth(n1, n2[j:], k-j)
+            return self.kth(n1[:i], n2[j:], k-j)
         else:
-            return self.kth(n1[i:], n2, k-i)
-        
+            return self.kth(n1[i:], n2[:j+1], k-i)
