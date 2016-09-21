@@ -22,23 +22,39 @@ class Solution(object):
 
 
 class Solution2(object):
-    """Accumulate at each bar
-    """
     def trap(self, height):
-        idxl, idxr = 0, len(height)-1
-        maxl, maxr = 0, 0
-        ret = 0
-        while idxl < idxr:
-            if height[idxl] <= height[idxr]:
-                if height[idxl] >= maxl:
-                    maxl = height[idxl]
-                else:
-                    ret += maxl - height[idxl]
-                idxl += 1
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        if not height:
+            return 0
+        sz = len(height)
+        left, right = [height[0]] + [0]*(sz-1), [0]*(sz-1) + [height[-1]]
+        for i in range(1, sz):
+            left[i] = max(height[i], left[i-1])
+            right[~i] = max(height[~i], right[~i+1])
+        ans = 0
+        for i, h in enumerate(height):
+            if h < min(left[i], right[i]):
+                ans += min(left[i], right[i]) - h
+        return ans
+
+
+class Solution3(object):
+    def trap(self, height):
+        """The same idea as Solution2, but slickly combine the two loops.
+        """
+        l, r = 0, len(height)-1
+        ans = maxl = maxr = 0
+        while l < r:
+            maxl = max(maxl, height[l])
+            maxr = max(maxr, height[r])
+            if maxl < maxr:
+                ans += maxl - height[l]
+                l += 1
             else:
-                if height[idxr] >= maxr:
-                    maxr = height[idxr]
-                else:
-                    ret += maxr - height[idxr]
-                idxr -= 1
-        return ret
+                ans += maxr - height[r]
+                r -= 1
+        return ans
+
