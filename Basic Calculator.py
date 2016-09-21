@@ -13,8 +13,8 @@ class Solution(object):
             else:
                 ans += int(num) * sign
                 num = '0'
-                if ch in ('+', '-'):
-                    sign = (1, -1)[ch == '-']
+                if ch in '+-':
+                    sign = 1 if ch == '+' else -1
                 elif ch == '(':
                     nums.append(ans)
                     signs.append(sign)
