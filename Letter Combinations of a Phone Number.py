@@ -31,3 +31,15 @@ class Solution(object):
         if digits != '':
             dfs(digits, 0)
         return ret
+
+
+class Solution2(object):
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        q = [''] if digits else []
+        for digit in digits:
+            q = [cur+ch for cur in q for ch in m[digit]]
+        return q

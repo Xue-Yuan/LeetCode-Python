@@ -6,8 +6,8 @@ class Solution(object):
         :rtype: int
         """
         idx = 0
-        for i in range(len(nums)):
-            if nums[i] != val:
-                nums[idx] = nums[i]
+        for num in nums:
+            if num != val:
+                nums[idx] = num
                 idx += 1
         return idx

@@ -23,8 +23,9 @@ class Solution2(object):
         :type needle: str
         :rtype: int
         """
-        for i in range(len(haystack)-len(needle)+1):
-            if haystack[i:i+len(needle)] == needle:
+        hsz, nsz = len(haystack), len(needle)
+        for i in range(hsz-nsz+1):
+            if haystack[i:i+nsz] == needle:
                 return i
         return -1
 

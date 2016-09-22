@@ -20,15 +20,12 @@ class Solution2(object):
         :type s: str
         :rtype: int
         """
-        stk, ret = [], 0
-        for idx in range(len(s)):
-            if s[idx] == '(':
-                stk.append(idx)
+        ans, stk = 0, []
+        for idx, ch in enumerate(s):
+            if ch == ')' and stk and s[stk[-1]] == '(':
+                stk.pop()
+                last = stk[-1] if stk else -1
+                ans = max(ans, idx-last)
             else:
-                if stk and s[stk[-1]] == '(':
-                    stk.pop()
-                    last = stk[-1] if stk else -1
-                    ret = max(ret, idx-last)
-                else:
-                    stk.append(idx)
-        return ret
+                stk.append(idx)
+        return ans

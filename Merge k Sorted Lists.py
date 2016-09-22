@@ -9,7 +9,6 @@ class Solution(object):
         :type lists: List[ListNode]
         :rtype: ListNode
         """
-        import heapq
         ph = cur = ListNode(0)
         pq = [(n.val, n) for n in lists if n]
         heapq.heapify(pq)

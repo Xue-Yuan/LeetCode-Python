@@ -5,21 +5,18 @@ class Solution(object):
         :type t: str
         :rtype: str
         """
-        from collections import Counter
-        b = e = 0
-        ret = ""
-        need, found = Counter(t), Counter()
-        cnt = 0
-        while e < len(s):
-            if s[e] in need:
-                cnt += found[s[e]] < need[s[e]]
-                found[s[e]] += 1
-            e += 1
-            while cnt == len(t):
-                if not ret or e - b < len(ret):
-                    ret = s[b:e]
-                if s[b] in need:
-                    cnt -= found[s[b]] <= need[s[b]]
-                    found[s[b]] -= 1
-                b += 1
-        return ret
+        need = collections.Counter(t)
+        found = collections.Counter()
+        b, cnt, ans = 0, 0, ''
+        for idx, ch in enumerate(s):
+            if ch in need:
+                found[ch] += 1
+                cnt += found[ch] <= need[ch]
+                while cnt == len(t):
+                    if not ans or len(ans) > idx-b+1:
+                        ans = s[b:idx+1]
+                    if s[b] in need:
+                        cnt -= found[s[b]] <= need[s[b]]
+                        found[s[b]] -= 1
+                    b += 1
+        return ans

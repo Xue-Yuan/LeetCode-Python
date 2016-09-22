@@ -11,14 +11,14 @@ class Solution(object):
         :type l2: ListNode
         :rtype: ListNode
         """
-        ph = cur = ListNode(0)
+        pre = dummy = ListNode(0)
         while l1 and l2:
             if l1.val > l2.val:
                 l1, l2 = l2, l1
-            cur.next = l1
-            cur, l1 = cur.next, l1.next
-        cur.next = l1 or l2
-        return ph.next
+            pre.next = l1
+            pre, l1 = pre.next, l1.next
+        pre.next = l1 or l2
+        return dummy.next
 
 
 class Solution2(object):
@@ -31,6 +31,6 @@ class Solution2(object):
         if not l1 or not l2:
             return l1 or l2
         if l1.val > l2.val:
-            return self.mergeTwoLists(l2, l1)
+            l1, l2 = l2, l1
         l1.next = self.mergeTwoLists(l1.next, l2)
         return l1
