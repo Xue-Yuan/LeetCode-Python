@@ -4,13 +4,11 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-        p = {')': '(', '}': '{', ']': '[', }
+        m = {')': '(', ']': '[', '}': '{'}
         stk = []
-        for c in s:
-            if c in ('(', '[', '{'):
-                stk.append(c)
-            elif len(stk) == 0 or p[c] != stk[-1]:
-                return False
-            else:
+        for ch in s:
+            if stk and ch in m and stk[-1] == m[ch]:
                 stk.pop()
-        return len(stk) == 0
+            else:
+                stk.append(ch)
+        return not stk

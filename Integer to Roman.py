@@ -12,7 +12,7 @@ class Solution(object):
         :rtype: str
         """
         ret = ''
-        for i in range(3, -1, -1):
+        for i in reversed(range(0, 4)):
             ret += m[i][num/(10**i)]
             num %= 10**i
         return ret

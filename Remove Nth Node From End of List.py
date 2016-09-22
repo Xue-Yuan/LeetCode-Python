@@ -11,13 +11,13 @@ class Solution(object):
         :type n: int
         :rtype: ListNode
         """
-        ph = fast = ListNode(0)
+        pre = ph = ListNode(0)
         ph.next = head
+        node = pre
         for _ in range(n):
-            fast = fast.next
-        slow = ph
-        while fast and fast.next:
-            slow, fast = slow.next, fast.next
-        if slow.next:
-            slow.next = slow.next.next
+            node = node.next
+        while node.next:
+            node = node.next
+            pre = pre.next
+        pre.next = pre.next.next
         return ph.next
