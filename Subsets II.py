@@ -4,16 +4,13 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        nums.sort()
-        ret, path = [], []
-
-        def dfs(nums, beg):
+        def dfs(nums, beg, path, ret=[]):
             ret.append(path[:])
             for idx in range(beg, len(nums)):
                 if beg == idx or nums[idx] != nums[idx-1]:
                     path.append(nums[idx])
-                    dfs(nums, idx+1)
+                    dfs(nums, idx+1, path)
                     path.pop()
-
-        dfs(nums, 0)
-        return ret
+            return ret
+        nums.sort()
+        return dfs(nums, 0, [])

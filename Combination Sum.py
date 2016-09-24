@@ -5,17 +5,14 @@ class Solution(object):
         :type target: int
         :rtype: List[List[int]]
         """
-        ret = []
-        self.dfs(candidates, 0, target, [], ret)
-        return ret
-
-    def dfs(self, can, idx, tar, cur, ret):
-        for i in range(idx, len(can)):
-            cur.append(can[i])
-            tar -= can[i]
-            if tar == 0:
-                ret.append(cur[:])
-            elif tar > 0:
-                self.dfs(can, i, tar, cur, ret)
-            cur.pop()
-            tar += can[i]
+        def _dfs(can, idx, _sum, path, ans=[]):
+            for cur in range(idx, len(can)):
+                path.append(can[cur])
+                if _sum + can[cur] == target:
+                    ans.append(path[:])
+                elif _sum + can[cur] < target:
+                    _dfs(can, cur, _sum, path)
+                path.pop()
+            return ans
+        candidates.sort()
+        return _dfs(candidates, 0, 0, [])

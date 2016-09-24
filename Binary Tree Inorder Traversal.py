@@ -30,7 +30,7 @@ class Solution2(object):
         :rtype: List[int]
         """
         return list(self._inorder(root))
-        
+
     def _inorder(self, root):
         stk = []
         while root or stk:

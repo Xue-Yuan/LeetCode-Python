@@ -48,4 +48,3 @@ class Solution2(object):
                     yield cur
                     cur = cur.right
                     tmp.right = None
-        

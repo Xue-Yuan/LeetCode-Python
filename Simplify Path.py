@@ -4,11 +4,11 @@ class Solution(object):
         :type path: str
         :rtype: str
         """
-        stk, files = [], filter(None, path.split('/'))
-        for file in files:
+        stk = []
+        for file in path.split('/'):
             if file == '..':
                 if stk:
                     stk.pop()
-            elif file != '.':
+            elif file and file != '.':
                 stk.append(file)
         return '/' + '/'.join(stk)

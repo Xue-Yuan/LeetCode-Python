@@ -11,7 +11,7 @@ class Solution(object):
             if target == nums[m]:
                 return m
             if nums[m] > nums[e]:
-                if nums[b] <= target <= nums[m]:
+                if nums[b] <= target < nums[m]:
                     e = m-1
                 else:
                     b = m+1
