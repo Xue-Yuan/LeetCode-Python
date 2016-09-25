@@ -17,16 +17,15 @@ class Solution(object):
         :type head: ListNode
         :rtype: TreeNode
         """
-        def _sortedListToBST(head, tail):
+        def _(head, tail):
             if head == tail:
                 return None
             fast = slow = head
-            while fast.next != tail and fast.next.next != tail:
+            while fast != tail and fast.next != tail:
                 fast = fast.next.next
                 slow = slow.next
             root = TreeNode(slow.val)
-            root.left = _sortedListToBST(head, slow)
-            root.right = _sortedListToBST(slow.next, tail)
+            root.left = _(head, slow)
+            root.right = _(slow.next, tail)
             return root
-
-        return _sortedListToBST(head, None)
+        return _(head, None)

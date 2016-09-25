@@ -34,3 +34,22 @@ class Solution(object):
                     prev = cur.right
                 cur = cur.next
             cur = head
+
+
+class Solution2:
+    """Simple level traversal.
+    """
+    def connect(self, root):
+        pre = dummy = TreeLinkNode(0)
+        while root:
+            while root:
+                if root.left:
+                    pre.next = root.left
+                    pre = pre.next
+                if root.right:
+                    pre.next = root.right
+                    pre = pre.next
+                root = root.next
+            root = dummy.next
+            dummy.next = None
+            pre = dummy

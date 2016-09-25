@@ -22,3 +22,22 @@ class Solution(object):
             return (self._isSymmetric(left.left, right.right)
                     and self._isSymmetric(left.right, right.left))
         return False
+
+
+class Solution2(object):
+    def isSymmetric(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if not root:
+            return True
+        stk = [(root.left, root.right)]
+        while stk:
+            left, right = stk.pop()
+            if not (left and right and left.val == right.val or not left and not right):
+                return False
+            if left and right:
+                stk.append((left.left, right.right))
+                stk.append((left.right, right.left))
+        return True
