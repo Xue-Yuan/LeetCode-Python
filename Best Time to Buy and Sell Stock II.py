@@ -10,3 +10,12 @@ class Solution(object):
         for price in prices:
             buy, sell = max(buy, sell+price), max(sell, buy-price)
         return buy
+
+
+class Solution2(object):
+    def maxProfit(self, prices):
+        ans = 0
+        for nxt, cur in zip(prices[1:], prices):
+            if nxt > cur:
+                ans += nxt - cur
+        return ans

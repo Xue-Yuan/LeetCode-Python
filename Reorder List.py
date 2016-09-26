@@ -13,23 +13,23 @@ class Solution(object):
         # split into two
         if not head or not head.next:
             return
-        ph = pre = ListNode(0)
+        dummy = pre = ListNode(0)
         pre.next = head
-        slow = fast = ph
-        while fast.next and fast.next.next:
+        slow = fast = dummy
+        while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
-        ph.next, slow.next = slow.next, None
+        dummy.next, slow.next = slow.next, None
         # reverse the second half
-        pre, ps = ph, ph.next
+        pre, ps = dummy, dummy.next
         while ps.next:
             p = ps.next
             ps.next = p.next
             p.next = pre.next
             pre.next = p
         # splice them together
-        cur1, cur2 = head, ph.next
-        pre = ph
+        cur1, cur2 = head, dummy.next
+        pre = dummy
         while cur1 or cur2:
             if cur1:
                 pre.next, cur1 = cur1, cur1.next

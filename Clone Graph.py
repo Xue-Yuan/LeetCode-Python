@@ -20,5 +20,4 @@ class Solution(object):
                     m[node].neighbors.append(dfs(neighbor))
             return m[node]
 
-        dfs(node)
-        return m[node]
+        return dfs(node)

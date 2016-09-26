@@ -17,8 +17,7 @@ class Solution(object):
                 ret.append(root.val)
                 stk.append(root)
                 root = root.left
-            root = stk.pop()
-            root = root.right
+            root = stk.pop().right
         return ret
 
 

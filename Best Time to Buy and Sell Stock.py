@@ -4,9 +4,8 @@ class Solution(object):
         :type prices: List[int]
         :rtype: int
         """
-        if not prices:
-            return 0
-        sell, ans = -prices[0], 0
+        ans, lowest = 0, sys.maxint
         for price in prices:
-            sell, ans = max(sell, -price), max(ans, sell+price)
+            lowest = min(price, lowest)
+            ans = max(ans, price-lowest)
         return ans

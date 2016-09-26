@@ -28,18 +28,16 @@ class Solution(object):
 
 class Solution2(object):
     def postorderTraversal(self, root):
-        stk, ans = [], []
-        prev = None
-        while root or stk:
-            if root:
+        pre, stk, ret = None, [], []
+        while stk or root:
+            while root:
                 stk.append(root)
                 root = root.left
+            cur = stk.pop()
+            if not cur.right or pre == cur.right:
+                ret.append(cur.val)
+                pre = cur
             else:
-                cur = stk.pop()
-                if not cur.right or cur.right == prev:
-                    ans.append(cur.val)
-                    prev = cur
-                else:
-                    stk.append(cur)
-                    root = cur.right
-        return ans
+                stk.append(cur)
+                root = cur.right
+        return ret

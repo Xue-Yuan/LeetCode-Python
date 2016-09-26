@@ -17,7 +17,6 @@ o---o---o--o
 Nah I give up drawing... Think about it yourself. Or just google it.
 """
 
-
 class Solution(object):
     def detectCycle(self, head):
         """
@@ -25,12 +24,12 @@ class Solution(object):
         :rtype: ListNode
         """
         slow = fast = head
-        hasCycle = False
-        while not hasCycle and fast and fast.next:
+        while fast and fast.next:
             fast = fast.next.next
             slow = slow.next
-            hasCycle = fast == slow
-        if not hasCycle:
+            if fast == slow:
+                break
+        else:
             return None
         slow = head
         while slow != fast:

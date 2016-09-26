@@ -4,16 +4,22 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        import collections
-        m = collections.defaultdict(int)
-        ans = 0
+        ans, d = 0, set(nums)
         for num in nums:
-            if m[num] == 0:
-                left, right = m[num-1], m[num+1]
-                val = 1 + left + right
-                m[num] = m[num-left] = m[num+right] = val
-                ans = max(ans, val)
+            if num in d:
+                cnt = 1
+                left, right = num-1, num+1
+                while left in d:
+                    cnt += 1
+                    d.discard(left)
+                    left -= 1
+                while right in d:
+                    cnt += 1
+                    d.discard(right)
+                    right += 1
+                ans = max(ans, cnt)
         return ans
+
 
 # https://discuss.leetcode.com/topic/15383/simple-o-n-with-explanation-just-walk-each-streak/2
 class Solution2:
