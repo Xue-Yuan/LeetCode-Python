@@ -4,26 +4,24 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        size = len(nums)
-        if size < 2:
+        if len(nums) < 2:
             return 0
-        mi, ma = min(nums), max(nums)
-        if mi == ma:
+        least, most, sz = min(nums), max(nums), len(nums)
+        if least == most:
             return 0
-        # The size of the buckets is greater than the size of nums.
-        # So at least one bucket will be empty. The maximumGap will
-        # lie between buckets
-        buckets = [(-1, -1)] * (size + 1)
+        # The size of the buckets is one greater than the size of nums.
+        # Make sure the greatest num goes into the last bucket and the
+        # least number goes into the first bucket.
+        # So at least one bucket in the middle will be empty.
+        # The maximumGap will lie between buckets
+        buckets = [[sys.maxint, -sys.maxint] for _ in range(sz+1)]
         for num in nums:
-            idx = (num - mi) * (size + 1) // (ma - mi + 1)
-            cur_mi, cur_ma = buckets[idx]
-            cur_ma = max(cur_ma, num)
-            cur_mi = num if cur_mi < 0 else min(num, cur_mi)
-            buckets[idx] = (cur_mi, cur_ma)
-
-        ans, prev = 0, None
-        for bucket in [bucket for bucket in buckets if bucket[0] > 0]:
-            if prev:
-                ans = max(bucket[0] - prev[1], ans)
-            prev = bucket
+            idx = ((num - least) * sz) // (most - least)
+            buckets[idx][0] = min(buckets[idx][0], num)
+            buckets[idx][1] = max(buckets[idx][1], num)
+        ans, pre = 0, None
+        for bucket in filter(lambda x: x[0] != sys.maxint, buckets):
+            if pre:
+                ans = max(ans, bucket[0]-pre[1])
+            pre = bucket
         return ans

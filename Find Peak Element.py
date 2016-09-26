@@ -9,10 +9,10 @@ class Solution(object):
             if beg + 1 == end:
                 return beg if nums[beg] > nums[end] else end
             mid = (beg + end) >> 1
-            if nums[mid-1] < nums[mid] and nums[mid] > nums[mid+1]:
+            if nums[mid] > max(nums[mid-1], nums[mid+1]):
                 return mid
             if nums[mid-1] < nums[mid] < nums[mid+1]:
                 beg = mid+1
             else:
-                end = mid
+                end = mid-1
         return beg

@@ -6,7 +6,7 @@ class Solution(object):
         :type upper: int
         :rtype: List[str]
         """
-        ans, beg = [], lower
+        ans = []
         for num in nums + [upper+1]:
             if num > lower+1:
                 ans.append('{}->{}'.format(lower, num-1))

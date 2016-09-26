@@ -7,7 +7,7 @@ class Solution(object):
         """
         sign = '-' if (numerator*denominator) < 0 else ''
         numerator, denominator = abs(numerator), abs(denominator)
-        interger, remainder = divmod(numerator, denominator)
+        integer, remainder = divmod(numerator, denominator)
         decimal, m = '', {}
         while remainder > 0:
             if remainder in m:
@@ -17,5 +17,5 @@ class Solution(object):
             quotient, remainder = divmod(remainder*10, denominator)
             decimal += str(quotient)
         if decimal:
-            return sign + str(interger) + '.' + decimal
-        return sign + str(interger)
+            return sign + str(integer) + '.' + decimal
+        return sign + str(integer)
