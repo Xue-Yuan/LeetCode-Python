@@ -54,7 +54,6 @@ class BSTIterator(object):
         """
         self.cur = root
         self.stk = []
-        
 
     def hasNext(self):
         """
@@ -64,7 +63,6 @@ class BSTIterator(object):
             self.stk.append(self.cur)
             self.cur = self.cur.left
         return len(self.stk) > 0
-        
 
     def next(self):
         """
