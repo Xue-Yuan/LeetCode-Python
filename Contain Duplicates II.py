@@ -5,11 +5,9 @@ class Solution(object):
         :type k: int
         :rtype: bool
         """
-        m = set()
+        m = {}
         for idx, num in enumerate(nums):
-            if idx > k:
-                m.discard(nums[idx-k-1])
-            if num in m:
+            if num in m and idx - m[num] <= abs(k):
                 return True
-            m.add(num)
+            m[num] = idx
         return False

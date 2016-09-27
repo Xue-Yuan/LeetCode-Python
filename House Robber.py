@@ -16,8 +16,7 @@ class Solution2(object):
         :type nums: List[int]
         :rtype: int
         """
-        ans = rob = skip = 0
+        rob = skip = 0
         for num in nums:
             rob, skip = skip+num, max(rob, skip)
-            ans = max(rob, skip)
-        return ans
+        return max(rob, skip)

@@ -29,7 +29,7 @@ class Solution(object):
         return quickselect(nums, 0, len(nums)-1, len(nums)-k+1)
 
 
-# A huge difference with or without partition
+# A huge difference with partition
 class Solution2(object):
     def findKthLargest(self, nums, k):
         """
