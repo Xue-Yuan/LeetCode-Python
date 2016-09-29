@@ -1,3 +1,7 @@
+"""We can do binary search.
+"""
+
+
 class Solution(object):
     def searchMatrix(self, matrix, target):
         """

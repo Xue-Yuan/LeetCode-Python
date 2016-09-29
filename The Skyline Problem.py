@@ -22,15 +22,15 @@ class Solution(object):
         i = j = h1 = h2 = 0
         while i < len(A) and j < len(B):
             if A[i][0] < B[j][0]:
-                x, h1 = A[i][0], A[i][1]
+                x, h1 = A[i]
                 h = max(h1, h2)
                 i += 1
             elif A[i][0] > B[j][0]:
-                x, h2 = B[j][0], B[j][1]
+                x, h2 = B[j]
                 h = max(h1, h2)
                 j += 1
             else:
-                x, h1, h2 = A[i][0], A[i][1], B[j][1]
+                (x, h1), h2 = A[i], B[j][1]
                 h = max(h1, h2)
                 i, j = i+1, j+1
             if not ans or ans[-1][1] != h:
