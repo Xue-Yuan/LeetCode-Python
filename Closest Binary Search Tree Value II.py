@@ -20,6 +20,8 @@ runtime (where n = total nodes)?
 #         self.left = None
 #         self.right = None
 
+from heapq import heapify, heapreplace
+
 class Solution(object):
     def closestKValues(self, root, target, k):
         """
@@ -35,11 +37,15 @@ class Solution(object):
                 root = root.left
             cur = stk.pop()
             if len(pq) < k:
-                heapq.heappush(pq, (-abs(cur.val-target), cur.val))
-            elif abs(cur.val-target) < -pq[0][0]:
-                heapq.heapreplace(pq, (-abs(cur.val-target), cur.val))
+                pq.append((-abs(target-cur.val), cur.val))
+                if len(pq) == k:
+                    heapify(pq)
+            else:
+                diff = abs(cur.val-target)
+                if diff < -pq[0][0]:
+                    heapreplace(pq, (-diff, cur.val))
             root = cur.right
-        return [val for _, val in pq]
+        return [v for _, v in pq]
 
 
 # O(k + log(n))
@@ -52,7 +58,6 @@ class Solution2(object):
         :rtype: List[int]
         """
         pre, suc = [], []
-        closest, diff = root, abs(root.val-target)
         while root:
             if root.val > target:
                 suc.append(root)
@@ -61,7 +66,7 @@ class Solution2(object):
                 pre.append(root)
                 root = root.right
         ans = []
-        while k:
+        for _ in range(k):
             if not pre:
                 ans.append(self._getSuccessor(suc))
             elif not suc:
@@ -70,7 +75,6 @@ class Solution2(object):
                 ans.append(self._getPredecessor(pre))
             else:
                 ans.append(self._getSuccessor(suc))
-            k -= 1
         return ans
 
     def _getPredecessor(self, pre):

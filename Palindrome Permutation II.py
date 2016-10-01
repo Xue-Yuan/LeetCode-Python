@@ -11,27 +11,23 @@ class Solution(object):
         single = [k for k, v in cntr.items() if v & 0x1]
         if len(single) > 1:
             return []
-        half = [k*(v/2) for k, v in cntr.items() if v > 1]
+        half = [k * (v/2) for k, v in cntr.items() if v > 1]
         half.sort()
-        return list(self.nextPermutation(half, single))
+        return list(self.next_permutation(half, single))
 
-    def nextPermutation(self, nums, single):
-        yield ''.join(nums + single + nums[::-1])
+    def next_permutation(self, half, single):
         while True:
-            k = -1
-            for i in range(len(nums)-1):
-                if nums[i] < nums[i+1]:
-                    k = i
-            if k == -1:
-                return
+            yield ''.join(half + single + half[::-1])
+            for i in reversed(range(len(half))):
+                if i > 0 and half[i-1] < half[i]:
+                    for j in reversed(range(len(half))):
+                        if half[j] > half[i-1]:
+                            half[i-1], half[j] = half[j], half[i-1]
+                            break
+                    break
             else:
-                l = -1
-                for i in range(k+1, len(nums)):
-                    if nums[k] < nums[i]:
-                        l = i
-                nums[k], nums[l] = nums[l], nums[k]
-                nums[:] = nums[:k+1] + nums[:k:-1]
-                yield ''.join(nums + single + nums[::-1])
+                return
+            half[:] = half[:i] + half[i:][::-1]
 
 
 if __name__ == '__main__':
