@@ -1,3 +1,7 @@
+"""Test case updated since my last submitting. If the second word is a
+prefix of the previous word, then there is no valid order.
+"""
+
 import collections
 
 
@@ -16,10 +20,10 @@ class Solution(object):
                     graph[ch1].append(ch2)
                     indegrees[ch2] += 1
                     break
-        q = collections.deque()
-        for k, v in indegrees.items():
-            if v == 0:
-                q.append(k)
+            else:
+                if len(pair[0]) > len(pair[1]):
+                    return ''
+        q = collections.deque(k for k, v in indegrees.items() if v == 0)
         ans = ''
         while q:
             cur = q.popleft()

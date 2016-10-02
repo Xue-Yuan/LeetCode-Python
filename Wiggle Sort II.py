@@ -1,3 +1,8 @@
+"""For O(n) time, we can utilize the idea of sort color. Find the median
+of the array, and do three-way partition.
+For O(1) space, somehow we have to come up a way of index mapping. 
+"""
+
 class Solution(object):
     def wiggleSort(self, nums):
         """

@@ -23,16 +23,11 @@ If there is no valid move, return an empty list [].
 
 class Solution(object):
     def generatePossibleNextMoves(self, s):
-        def dfs(s, idx):
-            if idx > len(s)-2:
-                return
-            if s[idx] == '+' and s[idx+1] == '+':
-                ans.append(s[:idx]+'--'+s[idx+2:])
-            dfs(s, idx+1)
-
-        ans = []
-        dfs(s, 0)
-        return ans
+        """
+        :type s: str
+        :rtype: List[str]
+        """
+        return [s[:i] + '--' + s[i+2:] for i in range(len(s)-1) if s[i:i+2] == '++']
 
 
 if __name__ == '__main__':

@@ -12,26 +12,27 @@
 
 
 class Solution(object):
-    def wordPatternMatch(self, p, s):
-
-        def dfs(p, s, m1, m2):
-            if not p and s or not s and p:
-                return False
-            if not p and not s:
-                return True
-            for end in range(1, len(s)+1):  # for pruning, len(s)-end >= len(p)-1
-                if p[0] not in m1 and s[:end] not in m2:
-                    m1[p[0]], m2[s[:end]] = s[:end], p[0]
-                    if dfs(p[1:], s[end:], m1, m2):
+    def wordPatternMatch(self, pattern, str):
+        """
+        :type pattern: str
+        :type str: str
+        :rtype: bool
+        """
+        def dfs(p, s, m1={}, m2={}):
+            if not (s and p):
+                return not (s or p)
+            for i in range(1, len(s)+2-len(p)):
+                _p, _s = p[0], s[:i]
+                if _p not in m1 and _s not in m2:
+                    m1[_p], m2[_s] = _s, _p
+                    if dfs(p[1:], s[i:]):
                         return True
-                    del m1[p[0]]
-                    del m2[s[:end]]
-                elif p[0] in m1 and s[:end] in m2 and m1[p[0]] == s[:end] and m2[s[:end]] == p[0]:
-                    if dfs(p[1:], s[end:], m1, m2):
+                    del m1[_p], m2[_s]
+                elif _p in m1 and _s in m2 and m1[_p] == _s and m2[_s] == _p:
+                    if dfs(p[1:], s[i:]):
                         return True
             return False
-
-        return dfs(p, s, {}, {})
+        return dfs(pattern, str)
 
 
 if __name__ == '__main__':
