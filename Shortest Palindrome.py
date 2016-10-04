@@ -1,3 +1,8 @@
+"""If we are allowed to add characters in both ends, then reverse it
+and run the algorithm again
+"""
+
+
 class Solution(object):
     def shortestPalindrome(self, s):
         """

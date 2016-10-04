@@ -17,7 +17,7 @@ class Solution(object):
         ret = [0] * len(nums)
         for idx, num in enumerate(reversed(nums)):
             root, cnt = self.insert(root, num)
-            ret[-1-idx] = cnt
+            ret[~idx] = cnt
         return ret
 
     def insert(self, root, val):
@@ -52,7 +52,7 @@ class Solution2(object):
             right = self._mergeSort(nums[mid:], smaller)
             i = j = 0
             while i < len(left) or j < len(right):
-                if j == len(right) or i < len(left) and left[i][1] < right[j][1]:
+                if j == len(right) or i < len(left) and left[i][1] <= right[j][1]:
                     nums[i+j] = left[i]
                     smaller[left[i][0]] += j
                     i += 1

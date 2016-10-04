@@ -14,7 +14,7 @@ class Solution(object):
         :rtype: str
         """
         indices = {ch: idx for idx, ch in enumerate(s)}
-        stk, used = [], set()
+        stk = []
         for idx, ch in enumerate(s):
             if ch not in stk:
                 while stk and indices[stk[-1]] > idx and stk[-1] > ch:

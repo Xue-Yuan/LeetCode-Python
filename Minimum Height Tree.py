@@ -14,10 +14,7 @@ class Solution(object):
             indegrees[v] += 1
             adjacencies[v].append(u)
             adjacencies[u].append(v)
-        q = collections.deque()
-        for v in range(n):
-            if indegrees[v] == 1:
-                q.append(v)
+        q = collections.deque(i for i, v in enumerate(indegrees) if v == 1)
         while n > 2:
             sz = len(q)
             for _ in range(sz):
