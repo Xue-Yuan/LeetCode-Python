@@ -10,5 +10,5 @@ class Solution(object):
         s = set(map(tuple, points))
         return all(
             (twice_mid-x, y) in s
-            for x, y in points
+            for x, y in s
         )

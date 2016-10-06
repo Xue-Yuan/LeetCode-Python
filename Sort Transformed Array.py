@@ -8,10 +8,8 @@ class Solution(object):
         :rtype: List[int]
         """
         nums = map(lambda x: a*x*x + b*x + c, nums)
-        if a == 0:
-            return nums if b >= 0 else nums[::-1]
         stk, beg, end = [], 0, len(nums)-1
-        check = operator.gt if a > 0 else operator.lt
+        check = operator.gt if a >= 0 else operator.lt
         while beg <= end:
             if check(nums[beg], nums[end]):
                 stk.append(nums[beg])

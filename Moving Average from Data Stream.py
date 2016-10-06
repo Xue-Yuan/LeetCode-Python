@@ -24,3 +24,21 @@ class MovingAverage(object):
 # Your MovingAverage object will be instantiated and called as such:
 # obj = MovingAverage(size)
 # param_1 = obj.next(val)
+
+
+class MovingAverage2(object):
+
+    def __init__(self, size):
+        """
+        Initialize your data structure here.
+        :type size: int
+        """
+        self.q = collections.deque(maxlen=size)
+
+    def next(self, val):
+        """
+        :type val: int
+        :rtype: float
+        """
+        self.q.append(val)
+        return float(sum(self.q))/len(self.q)

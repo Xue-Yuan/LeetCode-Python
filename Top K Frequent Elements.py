@@ -10,8 +10,8 @@ class Solution(object):
         for ky, vl in collections.Counter(nums).items():
             if len(pq) < k:
                 heapq.heappush(pq, (vl, ky))
-            elif vl > pq[0][0]:
-                heapq.heapreplace(pq, (vl, ky))
+            else:
+                heapq.heappushpop(pq, (vl, ky))
         return [ky for _, ky in pq]
 
 

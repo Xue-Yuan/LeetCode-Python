@@ -17,6 +17,22 @@ class Solution(object):
         return _dfs(word, '', [], 0)
 
 
+class Solution2(object):
+    def generateAbbreviations(self, word):
+        """
+        :type word: str
+        :rtype: List[str]
+        """
+        def dfs(word, path, ans=[]):
+            if not word:
+                ans.append(re.sub('\d+', lambda m: str(len(m.group())), path))
+                return ans
+            dfs(word[1:], path+'1')
+            dfs(word[1:], path+word[0])
+            return ans
+        return dfs(word, '')
+
+
 if __name__ == '__main__':
     solution = Solution()
     print solution.generateAbbreviations('word')
