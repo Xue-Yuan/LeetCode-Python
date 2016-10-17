@@ -17,20 +17,14 @@ class Solution(object):
         :type digits: str
         :rtype: List[str]
         """
-        ret, path = [], []
-
-        def dfs(digits, idx):
-            if idx == len(digits):
-                ret.append(''.join(path))
-            else:
-                for ch in m[digits[idx]]:
-                    path.append(ch)
-                    dfs(digits, idx+1)
-                    path.pop()
-
-        if digits != '':
-            dfs(digits, 0)
-        return ret
+        def dfs(digits, path, ans=[]):
+            if not digits:
+                ans.append(path)
+                return ans
+            for ch in m[digits[0]]:
+                dfs(digits[1:], path+ch)
+            return ans
+        return dfs(digits, '') if digits else []
 
 
 class Solution2(object):

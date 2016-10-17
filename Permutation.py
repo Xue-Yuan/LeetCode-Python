@@ -4,23 +4,23 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        def dfs(nums, beg):
+        def dfs(nums, beg, ans=[]):
             if beg == len(nums):
-                yield nums
+                ans.append(nums)
             for idx in range(beg, len(nums)):
                 nums[beg], nums[idx] = nums[idx], nums[beg]
-                for res in dfs(nums[:], beg+1):
-                    yield res
-        return list(dfs(nums, 0))
+                dfs(nums[:], beg+1)
+            return ans
+        return dfs(nums, 0)
 
 
 class Solution2(object):
     def permute(self, nums):
-        perms = [[]]   
+        perms = [[]]
         for n in nums:
-            new_perms = []
-            for perm in perms:
-                for i in xrange(len(perm)+1):   
-                    new_perms.append(perm[:i] + [n] + perm[i:])   ###insert n
-            perms = new_perms
+            perms = [
+                p[:i] + [n] + p[i:]
+                for p in perms
+                for i in range(len(p)+1)
+            ]
         return perms

@@ -29,8 +29,6 @@ class Solution(object):
 
 
 class Solution2(object):
-    """To avoid duplicates, start from the idx a level above during dfs.
-    """
     def removeInvalidParentheses(self, s):
         """
         :type s: str
@@ -50,11 +48,10 @@ class Solution2(object):
                     ans.append(s)
                 return ans
             for i in range(beg, len(s)):
-                if left > 0 and s[i] == '(':
-                    if i == 0 or s[i] != s[i-1]:
+                if i == 0 or s[i] != s[i-1]:
+                    if left > 0 and s[i] == '(':
                         dfs(s[:i]+s[i+1:], i, left-1, right)
-                if right > 0 and s[i] == ')':
-                    if i == 0 or s[i] != s[i-1]:
+                    if right > 0 and s[i] == ')':
                         dfs(s[:i]+s[i+1:], i, left, right-1)
             return ans
 

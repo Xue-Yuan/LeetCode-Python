@@ -72,11 +72,11 @@ class Solution2(object):
         for num in nums:
             prefix.append(prefix[-1] + num)
 
-        def divid_conquer(prefix, beg, end):
+        def divide_conquer(prefix, beg, end):
             cnt = 0
             if beg+1 < end:
                 mid = (beg + end) >> 1
-                cnt = divid_conquer(prefix, beg, mid) + divid_conquer(prefix, mid, end)
+                cnt = divide_conquer(prefix, beg, mid) + divide_conquer(prefix, mid, end)
                 i = j = mid
                 for half in prefix[beg:mid]:
                     while i < end and prefix[i] - half < lower:
@@ -87,4 +87,4 @@ class Solution2(object):
                 prefix[beg:end] = sorted(prefix[beg:end])
             return cnt
 
-        return divid_conquer(prefix, 0, len(prefix))
+        return divide_conquer(prefix, 0, len(prefix))

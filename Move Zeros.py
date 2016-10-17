@@ -9,7 +9,7 @@ class Solution(object):
             if num:
                 nums[cur] = num
                 cur += 1
-        nums[cur:] = [0 for _ in range(cur, len(nums))]
+        nums[cur:] = [0] * (len(nums)-idx)
 
 
 if __name__ == '__main__':

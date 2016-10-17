@@ -37,11 +37,10 @@ class Solution2:
             path.append(str(node.val))
             if not node.left and not node.right:
                 ret.append('->'.join(path))
-            else:
-                if node.left:
-                    _dfs(node.left, path)
-                if node.right:
-                    _dfs(node.right, path)
+            if node.left:
+                _dfs(node.left, path)
+            if node.right:
+                _dfs(node.right, path)
             path.pop()
             return ret
         return _dfs(root, []) if root else []

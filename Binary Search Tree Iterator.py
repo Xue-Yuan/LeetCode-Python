@@ -47,7 +47,7 @@ class BSTIterator(object):
             yield node
 
 
-class BSTIterator(object):
+class BSTIterator2(object):
     def __init__(self, root):
         """
         :type root: TreeNode
@@ -68,8 +68,7 @@ class BSTIterator(object):
         """
         :rtype: int
         """
-        self.cur = self.stk.pop()
-        ret = self.cur.val
-        self.cur = self.cur.right
-        return ret
-        
+        tmp = self.stk.pop()
+        if tmp.right:
+            self.cur = tmp.right
+        return tmp.val

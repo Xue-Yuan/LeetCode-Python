@@ -25,3 +25,18 @@ class Solution(object):
             yield node.val
             for val in self._inorder(node.right):
                 yield val
+
+
+class Solution2(object):
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        def dfs(node, max_val, min_val):
+            if not node:
+                return True
+            if not (min_val < node.val < max_val):
+                return False
+            return dfs(node.left, node.val, min_val) and dfs(node.right, max_val, node.val)
+        return dfs(root, float('inf'), float('-inf'))

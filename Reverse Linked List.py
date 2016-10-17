@@ -12,10 +12,7 @@ class Solution(object):
         """
         pre, cur = None, head
         while cur:
-            tmp = cur.next
-            cur.next = pre
-            pre = cur
-            cur = tmp
+            pre, cur.next, cur = cur, pre, cur.next
         return pre
 
 

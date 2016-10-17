@@ -11,22 +11,21 @@ class Solution(object):
         :type newInterval: Interval
         :rtype: List[Interval]
         """
+        def overlap(i, n):
+            if i.start > n.start:
+                i, n = n, i
+            return i.end >= n.start
+
+        def merge2(i, n):
+            return Interval(min(i.start, n.start), max(i.end, n.end))
+
         ans = []
-        for interval in intervals:
-            if self._overlap(interval, newInterval):
-                newInterval = self._merge(interval, newInterval)
+        for i in intervals:
+            if overlap(i, newInterval):
+                newInterval = merge2(i, newInterval)
             else:
-                if interval.start > newInterval.start:
-                    newInterval, interval = interval, newInterval
-                ans.append(interval)
+                if i.start > newInterval.start:
+                    i, newInterval = newInterval, i
+                ans.append(i)
         ans.append(newInterval)
         return ans
-
-    def _overlap(self, interval1, interval2):
-        if interval1.start > interval2.start:
-            interval1, interval2 = interval2, interval1
-        return interval1.end >= interval2.start
-
-    def _merge(self, interval1, interval2):
-        return Interval(min(interval1.start, interval2.start),
-                        max(interval1.end, interval2.end))
