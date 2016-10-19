@@ -4,13 +4,12 @@ class Solution(object):
         :type nums: List[int]
         :rtype: bool
         """
-        incr = []
+        f = s = t = float('inf')
         for num in nums:
-            idx = bisect.bisect_left(incr, num)
-            if idx == len(incr):
-                incr.append(num)
-            else:
-                incr[idx] = num
-            if len(incr) == 3:
-                return True
-        return False
+            if num <= f:
+                f = num
+            elif num <= s:
+                s = num
+            elif num <= t:
+                t = num
+        return t != float('inf')

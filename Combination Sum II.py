@@ -5,20 +5,16 @@ class Solution(object):
         :type target: int
         :rtype: List[List[int]]
         """
+        def dfs(beg, target, path, ans=[]):
+            if target == 0:
+                ans.append(path[:])
+                return ans
+            for idx in range(beg, len(candidates)):
+                if idx == beg or candidates[idx] != candidates[idx-1]:
+                    if target - candidates[idx] >= 0:
+                        path.append(candidates[idx])
+                        dfs(idx+1, target-candidates[idx], path)
+                        path.pop()
+            return ans
         candidates.sort()
-        return list(self.dfs(candidates, 0, target, []))
-
-    def dfs(self, can, idx, tar, cur):
-        for i in range(idx, len(can)):
-            if i == idx or can[i] != can[i-1]:
-                tar -= can[i]
-                if tar == 0:
-                    yield cur + [can[i]]
-                elif tar > 0:
-                    cur.append(can[i])
-                    for rs in self.dfs(can, i+1, tar, cur):
-                        yield rs
-                    cur.pop()
-                else:
-                    break
-                tar += can[i]
+        return dfs(0, target, [])

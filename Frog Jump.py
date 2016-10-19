@@ -7,17 +7,18 @@ class Solution(object):
         :type stones: List[int]
         :rtype: bool
         """
-        indices = {stone: idx for idx, stone in enumerate(stones)}
+        s = set(stones)
         reachable = collections.defaultdict(set)
         reachable[0].add(0)
-        for idx in range(len(stones)-1):
-            if idx in reachable:
-                for k in reachable[idx]:
+        for stone in stones:
+            if stone in reachable:
+                for k in reachable[stone]:
                     for jump in (k-1, k, k+1):
-                        if jump > 0 and stones[idx] + jump in indices:
-                            tmp = indices[stones[idx]+jump]
-                            reachable[tmp].add(jump)
-        return len(stones)-1 in reachable
+                        if jump > 0 and stone+jump in s:
+                            if stone+jump == stones[-1]:
+                                return True
+                            reachable[stone+jump].add(jump)
+        return stones[-1] in reachable
 
 
 if __name__ == '__main__':

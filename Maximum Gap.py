@@ -19,9 +19,8 @@ class Solution(object):
             idx = ((num - least) * sz) // (most - least)
             buckets[idx][0] = min(buckets[idx][0], num)
             buckets[idx][1] = max(buckets[idx][1], num)
-        ans, pre = 0, None
+        ans, pre = 0, least
         for bucket in filter(lambda x: x[0] != sys.maxint, buckets):
-            if pre:
-                ans = max(ans, bucket[0]-pre[1])
-            pre = bucket
+            ans = max(ans, bucket[0]-pre)
+            pre = bucket[1]
         return ans

@@ -12,7 +12,7 @@ class Solution(object):
                 return ans
             for i in range(1, len(num)+1):
                 cur, val = num[:i], int(num[:i])
-                if len(cur) > 1 and cur[0] == '0':
+                if str(val) != cur:
                     continue
                 if path:
                     search(num[i:], res+val, path+'+'+cur, val)

@@ -59,7 +59,7 @@ class Codec2:
             ans.append('#')
             root = stk.pop().right
         return ' '.join(ans)
-        
+
     def deserialize(self, data):
         """Decodes your encoded data to tree.
 
