@@ -69,6 +69,5 @@ class BSTIterator2(object):
         :rtype: int
         """
         tmp = self.stk.pop()
-        if tmp.right:
-            self.cur = tmp.right
+        self.cur = tmp.right
         return tmp.val
