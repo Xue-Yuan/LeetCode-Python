@@ -5,6 +5,7 @@
 #         self.left = None
 #         self.right = None
 
+
 class Solution(object):
     def isSymmetric(self, root):
         """
@@ -12,16 +13,14 @@ class Solution(object):
         :rtype: bool
         """
         if not root:
-            return False
-        return self._isSymmetric(root.left, root.right)
-
-    def _isSymmetric(self, left, right):
-        if not left and not right:
             return True
-        if left and right and left.val == right.val:
-            return (self._isSymmetric(left.left, right.right)
-                    and self._isSymmetric(left.right, right.left))
-        return False
+        def sym(l, r):
+            if not l and not r:
+                return True
+            if l and r:
+                return l.val == r.val and sym(l.left, r.right) and sym(l.right, r.left)
+            return False
+        return sym(root.left, root.right)
 
 
 class Solution2(object):
