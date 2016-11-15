@@ -31,7 +31,7 @@ class Codec:
         :rtype: TreeNode
         """
         def dfs():
-            val = vals.next()
+            val = next(vals)
             if val == '#':
                 return None
             root = TreeNode(val)

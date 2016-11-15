@@ -4,13 +4,11 @@ class Solution(object):
         :type preorder: List[int]
         :rtype: bool
         """
-        stk, cur = [], None
-        for node in preorder:
-            if not stk or node < stk[-1]:
-                if cur and node <= cur:
-                    return False
-            else:
-                while stk and node > stk[-1]:
-                    cur = stk.pop()
-            stk.append(node)
+        stk, least = [], float('-inf')
+        for num in preorder:
+            if num < least:
+                return False
+            while stk and num > stk[-1]:
+                least = stk.pop()
+            stk.push(num)
         return True

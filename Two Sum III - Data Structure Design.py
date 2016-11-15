@@ -24,7 +24,7 @@ class TwoSum(object):
             if diff in self.nums and (diff != num or self.nums[diff] > 1):
                 return True
         return False
-        
+
 
 # Your TwoSum object will be instantiated and called as such:
 # twoSum = TwoSum()

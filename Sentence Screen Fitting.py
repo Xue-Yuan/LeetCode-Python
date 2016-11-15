@@ -27,3 +27,21 @@ class Solution(object):
                     r += 1
                     cur = cols
         return times
+
+
+# https://scottduan.gitbooks.io/leetcode-review/content/sentence_screen_fitting.html
+def wordsTyping(sentence, rows, cols):
+    sentence = ' '.join(sentence) + ' '
+    sz, cnt = len(sentence), 0
+    m = [0] * sz
+    for i in range(1, sz):
+        m[i] = 1 if sentence[i] == ' ' else m[i-1]-1
+    for i in range(rows):
+        cnt += cols
+        cnt += m[cnt % sz]
+    return cnt/sz
+
+
+sentence = ["I", "had"]
+print Solution().wordsTyping(sentence, 1, 5)
+print wordsTyping(sentence, 1, 5)

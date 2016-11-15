@@ -14,4 +14,4 @@ def decompress(s):
     except:
         return s
 
-print solution('aaabbbccc2x[ab]ccc3x[abc2x[bcd]]aaa')
+print decompress('aaabbbccc2x[ab]ccc3x[abc2x[bcd]]aaa')
