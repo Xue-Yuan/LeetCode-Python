@@ -25,20 +25,34 @@ class Iterator(object):
 
 
 class JumpIterator(object):
-    def __init__(self, iterator):
+    def __init__(self, iterator, jump):
         self.iter = iterator
+        self.jump = jump
+        self.val = next(iterator, None)
+        self.used = self.val is None
 
     def next(self):
-        val = self.iter.next()
-        if self.iter.hasNext():
-            self.iter.next()
-        return val
+        if self.used:
+            self.hasNext()
+        self.used = True
+        return self.val
 
     def hasNext(self):
-        return self.iter.hasNext()
+        try:
+            if self.used:
+                for _ in range(self.jump):
+                    if self.iter.hasNext():
+                        self.val = next(self.iter)
+                    else:
+                        break
+                    self.used = False
+            return not self.used
+        except:
+            return False
 
 
-itr = Iterator([1,2,3,4,5])
-jitr = JumpIterator(itr)
-while jitr.hasNext():
-    print jitr.next()
+if __name__ == "__main__":
+    itr = Iterator(range(1,100))
+    jitr = JumpIterator(itr, 6)
+    while jitr.hasNext():
+        print jitr.next()

@@ -1,6 +1,3 @@
-import re
-
-
 def decompress(s):
     try:
         idx = s.index('[')
@@ -14,4 +11,5 @@ def decompress(s):
     except:
         return s
 
-print decompress('aaabbbccc2x[ab]ccc3x[abc2x[bcd]]aaa')
+
+print compress('aaaababa')

@@ -63,3 +63,18 @@ class Solution(object):
             return 1
         lst = nestedinteger.getList()
         return (1 + max(self.findDepth(item) for item in lst)) if lst else 1
+
+
+class Solution2(object):
+    def depthSumInverse(self, nestedList):
+        total = lvl_sum = 0
+        while nestedList:
+            tmp = []
+            for item in nestedList:
+                if item.isInteger():
+                    lvl_sum += item.getInteger()
+                else:
+                    tmp += item.getList()
+            total += lvl_sum
+            nestedList = tmp
+        return total

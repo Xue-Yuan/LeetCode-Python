@@ -4,13 +4,13 @@ class Solution(object):
         :type n: int
         :rtype: List[List[int]]
         """
-        def _dfs(n, path, i, ret=[]):
-            while i*i <= n:
+        def dfs(n, beg, path, ans):
+            if path:
+                ans.append(path + [n])
+            for i in range(beg, int(n**.5)+1):
                 if n % i == 0:
                     path.append(i)
-                    ret.append(path + [n/i])
-                    _dfs(n/i, path, i)
+                    dfs(n/i, i, path, ans)
                     path.pop()
-                i += 1
-            return ret
-        return _dfs(n, [], 2)
+            return ans
+        return dfs(n, 2, [], [])

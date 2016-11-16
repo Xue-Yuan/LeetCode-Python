@@ -1,77 +1,74 @@
-"""We can also make a state interface and implement different states to it,
-which would make the decision tree looks prettier. And it would also be
-entendable.
-"""
-
 class Solution(object):
     def isNumber(self, s):
         """
         :type s: str
         :rtype: bool
         """
-        state = 'init'
+        (init, sign, dot, integer, decimal,
+            exp, exp_sign, exp_integer, invalid) = range(9)
+        state = init
         for ch in s.strip():
-            if state == 'init':
+            if state == init:
                 if ch in '-+':
-                    state = 'sign'
+                    state = sign
                 elif ch == '.':
-                    state = 'dot'
+                    state = dot
                 elif ch.isdigit():
-                    state = 'number'
+                    state = integer
                 else:
-                    state = 'invalid'
-            elif state == 'sign':
+                    state = invalid
+            elif state == sign:
                 if ch == '.':
-                    state = 'dot'
+                    state = dot
                 elif ch.isdigit():
-                    state = 'number'
+                    state = integer
                 else:
-                    state = 'invalid'
-            elif state == 'number':
+                    state = invalid
+            elif state == integer:
                 if ch.isdigit():
                     continue
                 elif ch == '.':
-                    state = 'dot_with_number'
+                    state = decimal
                 elif ch in 'eE':
-                    state = 'exp'
+                    state = exp
                 else:
-                    state = 'invalid'
-            elif state == 'dot':
+                    state = invalid
+            elif state == dot:
                 if ch.isdigit():
-                    state = 'dot_with_number'
+                    state = decimal
                 else:
-                    state = 'invalid'
-            elif state == 'dot_with_number':
+                    state = invalid
+            elif state == decimal:
                 if ch.isdigit():
                     continue
                 elif ch == '.':
-                    state = 'invalid'
+                    state = invalid
                 elif ch in 'eE':
-                    state = 'exp'
+                    state = exp
                 else:
-                    state = 'invalid'
-            elif state == 'exp':
+                    state = invalid
+            elif state == exp:
                 if ch in '-+':
-                    state = 'sign_exp'
+                    state = exp_sign
                 elif ch.isdigit():
-                    state = 'number_exp'
+                    state = exp_integer
                 else:
-                    state = 'invalid'
-            elif state == 'sign_exp':
+                    state = invalid
+            elif state == exp_sign:
                 if ch.isdigit():
-                    state = 'number_exp'
+                    state = exp_integer
                 else:
-                    state = 'invalid'
-            elif state == 'number_exp':
+                    state = invalid
+            elif state == exp_integer:
                 if ch.isdigit():
                     continue
                 else:
-                    state = 'invalid'
-            elif state == 'invalid':
-                return False
+                    state = invalid
+            elif state == invalid:
+                break
             else:
-                state = 'invalid'
-        return state in ('number', 'dot_with_number', 'number_exp')
+                state = invalid
+        return state in (integer, decimal, exp_integer)
 
 
 if __name__ == '__main__':
