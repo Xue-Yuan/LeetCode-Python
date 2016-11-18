@@ -14,13 +14,10 @@ class Solution(object):
         def _dfs(node, pre, cnt):
             if not node:
                 return cnt
-            if pre and node.val == pre.val+1:
-                nxt = cnt + 1
-            else:
-                nxt = 1
+            nxt = cnt+1 if node.val == pre+1 else 1
             return max(
                 cnt,
                 _dfs(node.left, node, nxt),
                 _dfs(node.right, node, nxt),
             )
-        return _dfs(root, None, 0)
+        return _dfs(root, float('NaN'), 0)

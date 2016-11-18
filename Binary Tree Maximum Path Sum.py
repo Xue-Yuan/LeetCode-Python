@@ -11,17 +11,16 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        def _maxPathSum(node):
-            """return max, end_at_node_max
-            """
-            if not node:
-                return root.val, 0
-            max_l, end_l = _maxPathSum(node.left)
-            max_r, end_r = _maxPathSum(node.right)
-            ans = max(max_l, max_r, end_l+end_r+node.val)
-            end = max(max(end_l, end_r, 0) + node.val, 0)
-            return ans, end
+        self.ans = float('-inf')
 
-        if not root:
-            return 0
-        return _maxPathSum(root)[0]
+        def postOrder(node):
+            if not node:
+                return 0
+            l, r = postOrder(node.left), postOrder(node.right)
+            self.ans = max(
+                self.ans, l+node.val, r+node.val, l+r+node.val, node.val
+            )
+            return max(l, r, 0) + node.val
+
+        postOrder(root)
+        return self.ans

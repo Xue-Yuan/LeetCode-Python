@@ -1,3 +1,8 @@
+"""Kadane's algorithm for matrix. The binary search and insert can be
+further optimized by utilizing BST.
+"""
+
+
 class Solution(object):
     def maxSumSubmatrix(self, matrix, k):
         """

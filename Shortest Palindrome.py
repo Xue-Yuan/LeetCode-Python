@@ -13,6 +13,7 @@ class Solution(object):
         for idx in range(len(s)+1):
             if s.startswith(re[idx:]):
                 return re[:idx] + s
+        return ''
 
 
 #KMP
@@ -30,4 +31,4 @@ class Solution2(object):
             while lnth > 0 and new[lnth] != new[idx]:
                 lnth = lps[lnth-1]
             lps[idx] = lnth + (new[lnth] == new[idx])
-        return r[:len(r)-lps[-1]] + s
+        return r[:-lps[-1]] + s
