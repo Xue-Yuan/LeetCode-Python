@@ -1,4 +1,5 @@
-class Solution(object):
+# Naive solution
+class Solution1(object):
     def wordsTyping(self, sentence, rows, cols):
         """
         :type sentence: List[str]
@@ -6,27 +7,39 @@ class Solution(object):
         :type cols: int
         :rtype: int
         """
+        row = total = cur = idx = 0
         sz = len(sentence)
-        total = sum(len(s)+1 for s in sentence)
-        times = (cols+1)/total*rows
-        cols = (cols+1) % total
-        idx, r, cur, start = 0, 0, cols, 0
-        cache = {}
-        while r < rows:
-            if cur == cols and idx in cache:
-                r += 1
-                times += cache[idx] < idx
-                idx = cache[idx]
+        while row < rows:
+            word = sentence[idx]
+            if cur + len(word) + 1 <= cols + 1:
+                cur += len(word) + 1
+                total += (idx+1) >= sz
+                idx = (idx+1) % sz
             else:
-                if len(sentence[idx])+1 <= cur:
-                    cur -= len(sentence[idx])+1
-                    idx = (idx+1) % sz
-                    times += idx == 0
-                else:
-                    start = cache[start] = idx
-                    r += 1
-                    cur = cols
-        return times
+                row += 1
+                cur = 0
+        return total
+
+
+class Solution2(object):
+    def wordsTyping(self, sentence, rows, cols):
+        """
+        :type sentence: List[str]
+        :type rows: int
+        :type cols: int
+        :rtype: int
+        """
+        sentence = ' '.join(sentence) + ' '
+        sz, cnt = len(sentence), 0
+        for _ in range(rows):
+            cnt += cols
+            if sentence[cnt % sz] == ' ':
+                cnt += 1
+            else:
+                while cnt > 0 and sentence[(cnt-1) % sz] != ' ':
+                    cnt -= 1
+        return cnt / sz
+
 
 
 # https://scottduan.gitbooks.io/leetcode-review/content/sentence_screen_fitting.html
