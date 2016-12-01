@@ -59,4 +59,4 @@ def caculate(exp):
 if __name__ == '__main__':
     while True:
         exp = raw_input("Enter expression: ")
-        print 'expected: {}, got {}'.format(eval(exp), caculate(exp))
+        print 'expected: {}, got: {}'.format(eval(exp), caculate(exp))

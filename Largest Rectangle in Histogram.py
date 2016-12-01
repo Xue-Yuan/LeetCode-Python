@@ -38,13 +38,11 @@ class Solution(object):
         :type heights: List[int]
         :rtype: int
         """
-        heights.append(0)
-        stk, ret = [], 0
-        for idx, height in enumerate(heights):
-            while stk and height < heights[stk[-1]]:
-                h = heights[stk.pop()]
-                w = idx if not stk else idx - stk[-1] - 1
-                ret = max(ret, w*h)
-            stk.append(idx)
-        heights.pop()
-        return ret
+        stk, ans = [], 0
+        for i, h in enumerate(heights + [0]):
+            while stk and heights[stk[-1]] > h:
+                cur = heights[stk.pop()]
+                width = i if not stk else i-stk[-1]-1
+                ans = max(ans, cur*width)
+            stk.append(i)
+        return ans
