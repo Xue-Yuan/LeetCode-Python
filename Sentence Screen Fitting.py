@@ -1,5 +1,5 @@
 # Naive solution
-class Solution1(object):
+class Solution(object):
     def wordsTyping(self, sentence, rows, cols):
         """
         :type sentence: List[str]
@@ -7,17 +7,14 @@ class Solution1(object):
         :type cols: int
         :rtype: int
         """
-        row = total = cur = idx = 0
+        idx = total = line = 0
         sz = len(sentence)
-        while row < rows:
-            word = sentence[idx]
-            if cur + len(word) + 1 <= cols + 1:
-                cur += len(word) + 1
-                total += (idx+1) >= sz
+        for _ in range(rows):
+            while line + 1 + len(sentence[idx]) <= cols+1:
+                line += len(sentence[idx])+1
+                total += idx == sz-1
                 idx = (idx+1) % sz
-            else:
-                row += 1
-                cur = 0
+            line = 0
         return total
 
 

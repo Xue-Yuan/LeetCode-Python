@@ -6,15 +6,14 @@ class Solution(object):
         """
         if not nums:
             return []
-        beg = pre = nums[0]
+        beg, expected = nums[0], nums[0]+1
         ans = []
-        for cur in nums[1:] + [nums[-1]]:
-            if cur == pre + 1:
-                pre = cur
-            else:
-                if beg == pre:
-                    ans.append(str(beg))
+        for num in nums[1:] + [nums[0]]:
+            if num != expected:
+                if beg + 1 != expected:
+                    ans.append('{}->{}'.format(beg, expected-1))
                 else:
-                    ans.append('{0}->{1}'.format(beg, pre))
-                beg = pre = cur
+                    ans.append(str(beg))
+                beg = num
+            expected = num+1
         return ans
