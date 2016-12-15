@@ -4,14 +4,12 @@ class Solution(object):
         :type citations: List[int]
         :rtype: int
         """
-        ans, l = 0, len(citations)
-        beg, end = 0, l
-        while beg < end:
-            mid = (beg + end) >> 1
-            if citations[mid] >= l - mid:
-                ans = max(ans, l - mid)
-                end = mid
+        sz = len(citations)
+        b, e = 0, sz
+        while b < e:
+            m = (b+e) >> 1
+            if citations[m] < sz-m:
+                b = m+1
             else:
-                ans = max(ans, citations[mid])
-                beg = mid+1
-        return ans
+                e = m
+        return sz-b

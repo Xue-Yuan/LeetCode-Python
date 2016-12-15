@@ -1,35 +1,30 @@
-"""https://threads-iiith.quora.com/Tutorial-on-Trie-and-example-problems
-"""
-
-
-class Node(object):
+class TrieNode(object):
     def __init__(self):
-        self.kids = [None, None]
+        self.kids = [None] * 2
 
 
-class Trie(object):
-    def __init__(self):
-        self.root = Node()
-        self.insert(0)
+def insert(root, num):
+    if root is None:
+        root = TrieNode()
+    node = root
+    for bit in map(int, '{:032b}'.format(num)):
+        if node.kids[bit] is None:
+            node.kids[bit] = TrieNode()
+        node = node.kids[bit]
+    return root
 
-    def insert(self, num):
-        node = self.root
-        for i in reversed(range(32)):
-            bit = (num >> i) & 0x1
-            if not node.kids[bit]:
-                node.kids[bit] = Node()
+
+def query(root, num):
+    ans, flipper = 0, 1 << 31
+    node = root
+    for bit in map(int, '{:032b}'.format(num)):
+        if node.kids[bit ^ 0x1]:
+            ans |= flipper
+            node = node.kids[bit ^ 0x1]
+        else:
             node = node.kids[bit]
-
-    def query(self, num):
-        node, ans = self.root, 0
-        for i in reversed(range(32)):
-            bit = (num >> i) & 0x1
-            if not node.kids[bit ^ 0x1]:
-                node = node.kids[bit]
-            else:
-                ans |= (1 << i)
-                node = node.kids[bit ^ 0x1]
-        return ans
+        flipper >>= 1
+    return ans
 
 
 class Solution(object):
@@ -38,12 +33,14 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        if len(nums) < 2:
+        if not nums:
             return 0
-        ans, trie = 0, Trie()
-        for num in nums:
-            ans = max(ans, trie.query(num))
-            trie.insert(num)
+        root = insert(None, nums[0])
+        ans = 0
+        for num in nums[1:]:
+            ans = max(ans, query(root, num))
+            print(ans)
+            root = insert(root, num)
         return ans
 
 
@@ -52,10 +49,10 @@ class Solution(object):
 
 
 def solution2(nums):
-    ans, trie, xors = 0, Trie(), 0
+    ans, trie, xors = 0, TrieNode(), 0
     for num in nums:
         xors ^= num
-        ans = max(ans, trie.query(xors))
-        trie.insert(xors)
+        ans = max(ans, query(trie, xors))
+        insert(trie, xors)
     return ans
 

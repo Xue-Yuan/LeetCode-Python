@@ -4,8 +4,8 @@ class RandomizedSet(object):
         """
         Initialize your data structure here.
         """
+        self.indices = {}
         self.vec = []
-        self.m = {}
 
     def insert(self, val):
         """
@@ -13,12 +13,11 @@ class RandomizedSet(object):
         :type val: int
         :rtype: bool
         """
-        m, vec = self.m, self.vec
-        if val in m:
-            return False
-        m[val] = len(vec)
-        vec.append(val)
-        return True
+        if val not in self.indices:
+            self.indices[val] = len(self.vec)
+            self.vec.append(val)
+            return True
+        return False
 
     def remove(self, val):
         """
@@ -26,15 +25,17 @@ class RandomizedSet(object):
         :type val: int
         :rtype: bool
         """
-        m, vec = self.m, self.vec
-        if val not in m:
+        if val not in self.indices:
             return False
-        idx = m[val]
-        if idx != len(vec)-1:
-            vec[idx] = vec[-1]
-            m[vec[-1]] = idx
-        del m[val]
-        vec.pop()
+        if len(self.vec) == 1 or self.vec[-1] == val:
+            self.vec.pop()
+            del self.indices[val]
+        else:
+            idx = self.indices[val]
+            self.indices[self.vec[-1]] = idx
+            self.vec[idx] = self.vec[-1]
+            del self.indices[val]
+            self.vec.pop()
         return True
 
     def getRandom(self):

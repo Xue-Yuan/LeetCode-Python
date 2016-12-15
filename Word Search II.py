@@ -5,7 +5,7 @@ class Solution(object):
         :type words: List[str]
         :rtype: List[str]
         """
-        if not board or not board[0]:
+        if not any(board):
             return []
         root = {}
         for word in words:

@@ -12,10 +12,10 @@ class Solution(object):
         :rtype: List[str]
         """
         ans = []
-        for i in range(0, num+1):
+        for i in range(num+1):
             for _h in self.get_time(hours, i, 12):
                 for _m in self.get_time(minutes, num-i, 60):
-                    ans.append('{:}:{:02}'.format(_h, _m))
+                    ans.append('{}:{:02}'.format(_h, _m))
         return ans
 
     def get_time(self, time, n, limit):
