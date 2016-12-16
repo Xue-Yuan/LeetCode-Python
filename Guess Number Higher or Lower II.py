@@ -6,18 +6,14 @@ class Solution(object):
         """
         memo = {}
 
-        def min_val(b, e):
-            if b >= e:
-                return 0
-            if (b, e) in memo:
-                return memo[b, e]
-            ans = float('inf')
-            for i in range(b, e+1):
-                ans = min(ans, i+max_val(b, i, e))
-            memo[b, e] = ans
-            return ans
+        def guess(beg, end):
+            if (beg, end) not in memo:
+                if beg >= end:
+                    return 0
+                ans = float('inf')
+                for i in range(beg, end+1):
+                    ans = min(ans, max(guess(beg, i-1), guess(i+1, end))+i)
+                memo[beg, end] = ans
+            return memo[beg, end]
 
-        def max_val(b, i, e):
-            return max(min_val(b, i-1), min_val(i+1, e))
-
-        return min_val(1, n)
+        return guess(1, n)

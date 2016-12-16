@@ -71,7 +71,7 @@ class Solution2(object):
                 ans.append(self._getSuccessor(suc))
             elif not suc:
                 ans.append(self._getPredecessor(pre))
-            elif abs(pre[-1].val-target) < abs(suc[-1].val-target):
+            elif target-pre[-1].val < suc[-1].val-target:
                 ans.append(self._getPredecessor(pre))
             else:
                 ans.append(self._getSuccessor(suc))
