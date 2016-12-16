@@ -10,13 +10,14 @@ class Solution(object):
         :type lists: List[ListNode]
         :rtype: ListNode
         """
-        h = [(h.val, h) for h in lists if h]
+        h = [(node.val, node) for node in lists if node]
         heapq.heapify(h)
         pre = dummy = ListNode(0)
         while h:
             _, cur = heapq.heappop(h)
             pre.next = cur
             pre = pre.next
-            if cur.next:
-                heapq.heappush(h, (cur.next.val, cur.next))
+            cur = cur.next
+            if cur:
+                heapq.heappush(h, (cur.val, cur))
         return dummy.next

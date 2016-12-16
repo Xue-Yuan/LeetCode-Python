@@ -4,15 +4,14 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        beg, end = 0, len(nums)-1
-        while beg < end:
-            if beg + 1 == end:
-                return beg if nums[beg] > nums[end] else end
-            mid = (beg + end) >> 1
-            if nums[mid] > max(nums[mid-1], nums[mid+1]):
-                return mid
-            if nums[mid-1] < nums[mid] < nums[mid+1]:
-                beg = mid+1
+        nums = [float('-inf')] + nums + [float('-inf')]
+        b, e = 1, len(nums)
+        while b < e:
+            m = (b+e) >> 1
+            if nums[m-1] < nums[m] > nums[m+1]:
+                return m-1
+            if nums[m-1] < nums[m] < nums[m+1]:
+                b = m+1
             else:
-                end = mid-1
-        return beg
+                e = m
+        return -1

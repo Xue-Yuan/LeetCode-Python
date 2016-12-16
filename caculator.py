@@ -48,8 +48,6 @@ def caculate(exp):
                 while ops and ops[-1] != '(':
                     _cal(ops, nums)
                 ops.pop()
-            else:
-                pass
     while ops:
         # print nums, ops
         _cal(ops, nums)

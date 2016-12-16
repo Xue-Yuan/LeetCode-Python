@@ -5,13 +5,18 @@ class Solution(object):
         :type wordDict: Set[str]
         :rtype: List[str]
         """
+        memo = {}
+
         def dfs(s):
-            if s not in m:
-                m[s] = []
-                for idx in range(1, len(s)+1):
-                    if s[:idx] in wordDict:
-                        for res in dfs(s[idx:]):
-                            m[s].append(s[:idx]+' '+res if res else s[:idx])
-            return m[s]
-        m = {"": [""]}
+            if s not in memo:
+                ans = []
+                for i in range(1, len(s)):
+                    if s[:i] in wordDict:
+                        for rest in dfs(s[i:]):
+                            ans.append(s[:i] + ' ' + rest)
+                if s in wordDict:
+                    ans.append(s)
+                memo[s] = ans
+            return memo[s]
+
         return dfs(s)
