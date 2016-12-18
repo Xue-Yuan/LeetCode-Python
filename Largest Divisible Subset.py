@@ -10,7 +10,7 @@ class Solution(object):
             for vec in vecs:
                 if num % vec[-1] == 0 and len(vec) > len(tmp):
                     tmp = vec
-            vecs.append(tmp[:] + [num])
+            vecs.append(tmp + [num])
         return max(vecs, key=len) if vecs else []
 
 

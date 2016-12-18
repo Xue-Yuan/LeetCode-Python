@@ -29,17 +29,16 @@ class SnakeGame(object):
         """
         d, head = self.directions[direction], self.snake[0]
         new_head = [head[0]+d[0], head[1]+d[1]]
-        if new_head != head:
-            if not (0 <= new_head[0] < self.height and 0 <= new_head[1] < self.width):
-                return -1
-            if self.food and new_head == self.food[-1]:
-                self.score += 1
-                self.food.pop()
-            else:
-                self.snake.pop()
-            if new_head in self.snake:
-                return -1
-            self.snake.appendleft(new_head)
+        if not (0 <= new_head[0] < self.height and 0 <= new_head[1] < self.width):
+            return -1
+        if self.food and new_head == self.food[-1]:
+            self.score += 1
+            self.food.pop()
+        else:
+            self.snake.pop()
+        if new_head in self.snake:
+            return -1
+        self.snake.appendleft(new_head)
         return self.score
 
 # Your SnakeGame object will be instantiated and called as such:

@@ -5,26 +5,72 @@
 """
 
 
+class TreeNode(object):
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+
+def deserialize(data):
+    """Decodes your encoded data to tree.
+
+    :type data: str
+    :rtype: TreeNode
+    """
+    def dfs():
+        val = next(vals)
+        if val == '#':
+            return None
+        root = TreeNode(int(val))
+        root.left = dfs()
+        root.right = dfs()
+        return root
+    vals = iter(data.split(','))
+    return dfs()
+
+
+delete_val = {2}
+
+
 def to_delete(node):
-    pass
+    return node.val in delete_val
 
 
 def solution(root):
+    if not root:
+        return None
+
+    trees = {root}
+
     def dfs(node):
         if not node:
-            return
+            return None
         if to_delete(node):
+            trees.discard(node)
             if node.left:
-                descendant.append(node.left)
+                trees.add(node.left)
             if node.right:
-                descendant.append(node.right)
-        dfs(node.left)
-        dfs(node.right)
+                trees.add(node.right)
+        node.left = dfs(node.left)
+        node.right = dfs(node.right)
+        return None if to_delete(node) else node
 
-    descendant = collections.deque([root] if root else [])
-    ans = []
-    while descendant:
-        cur = descendant.popleft()
-        ans.append(cur)
-        dfs(cur)
-    return ans
+    dfs(root)
+    return trees
+
+
+def print_tree(root):
+    if not root:
+        return
+    print root.val,
+    print_tree(root.left)
+    print_tree(root.right)
+
+
+if __name__ == "__main__":
+    root = deserialize("1,2,4,#,#,5,#,#,3,6,#,#,7,#,#")
+    trees = solution(root)
+    for node in trees:
+        print_tree(node)
+        print
