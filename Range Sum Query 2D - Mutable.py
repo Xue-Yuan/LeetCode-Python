@@ -59,11 +59,32 @@ class NumMatrix(object):
             _sum(row1, col1)
         )
 
-# Your NumMatrix object will be instantiated and called as such:
-# numMatrix = NumMatrix(matrix)
-# numMatrix.sumRegion(0, 1, 2, 3)
-# numMatrix.update(1, 1, 10)
-# numMatrix.sumRegion(1, 2, 3, 4)
+
+class NumMatrix2(object):
+    """O(n) time update and query
+    """
+    def __init__(self, matrix):
+        rows, cols = len(matrix), len(matrix[0]) if matrix else 0
+        sum_matrix = [[0] * (cols+1)]
+        for row in matrix:
+            sum_row = [0]
+            for col in row:
+                sum_row.append(sum_row[-1] + col)
+            sum_matrix.append(sum_row)
+        self.sum_matrix = sum_matrix
+
+    def update(self, row, col, val):
+        diff = val - (self.sum_matrix[row+1][col+1] - self.sum_matrix[row+1][col])
+        cols = len(self.sum_matrix[0])
+        for c in range(col+1, cols):
+            self.sum_matrix[row+1][c] += diff
+
+    def sumRegion(self, row1, col1, row2, col2):
+        ans = 0
+        for r in range(row1+1, row2+2):
+            ans += self.sum_matrix[r][col2+1] - self.sum_matrix[r][col1]
+        return ans
+
 
 if __name__ == '__main__':
     matrix = [
