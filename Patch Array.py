@@ -7,7 +7,7 @@ class Solution(object):
         """
         cnt, missing = 0, 1
         for num in nums:
-            while missing < num and missing <= n:
+            while num > missing <= n:
                 cnt += 1
                 missing <<= 1
             missing += num

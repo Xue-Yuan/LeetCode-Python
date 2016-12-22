@@ -8,9 +8,8 @@ def shift_arr(nums, k):
     for beg in range(gcd(sz, abs(k))):
         cur, val = beg, nums[beg]
         while True:
-            nxt = (cur+k) % sz
-            nums[nxt], val = val, nums[nxt]
-            cur = nxt
+            cur = (cur+k) % sz
+            nums[cur], val = val, nums[cur]
             if cur == beg:
                 break
     return nums
