@@ -6,13 +6,14 @@ class Solution(object):
         :type upper: int
         :rtype: List[str]
         """
+        expected = lower
         ans = []
-        for num in nums + [upper+1]:
-            if num > lower+1:
-                ans.append('{}->{}'.format(lower, num-1))
-            elif num == lower+1:
-                ans.append(str(lower))
-            lower = num+1
+        for num in nums+[upper+1]:
+            if num == expected+1:
+                ans.append(str(expected))
+            elif num > expected+1:
+                ans.append('{}->{}'.format(expected, num-1))
+            expected = num+1
         return ans
 
 

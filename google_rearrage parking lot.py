@@ -6,6 +6,8 @@ needed to move the parking lot from src to dst.
 
 
 def solution(src, dst):
+    """https://discuss.leetcode.com/topic/67928/rearrange-parking-lot
+    """
     s_m = {val: idx for idx, val in enumerate(src)}
     d_m = {val: idx for idx, val in enumerate(dst)}
 
