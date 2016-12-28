@@ -1,11 +1,12 @@
-class Solution(object):
-    def generate(self, numRows):
-        """
-        :type numRows: int
-        :rtype: List[List[int]]
-        """
-        ret = [[1] * row for row in range(1, numRows+1)]
-        for row in range(2, numRows):
-            for idx in range(1, row):
-                ret[row][idx] = ret[row-1][idx-1] + ret[row-1][idx]
-        return ret
+def solution(n):
+    cur = 1
+    print cur,
+    for i in range(1, n+1):
+        cur = cur * (n-i+1) / i
+        print cur,
+    print
+
+
+if __name__ == "__main__":
+    for i in range(1, 10):
+        solution(i)

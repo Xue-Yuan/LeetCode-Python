@@ -4,15 +4,14 @@ class Solution(object):
         :type n: int
         :rtype: str
         """
-        ans = '1'
-        for _ in range(n-1):
-            pre, cnt, tmp = '', 0, ''
-            for ch in ans+' ':
-                if ch != pre:
-                    if cnt:
-                        tmp += str(cnt) + pre
-                    pre, cnt = ch, 1
-                else:
-                    cnt += 1
-            ans = tmp
-        return ans
+        s = '1'
+        for _ in range(1, n):
+            beg = end = 0
+            new = ''
+            while beg < len(s):
+                while end < len(s) and s[beg] == s[end]:
+                    end += 1
+                new += str(end-beg) + s[beg]
+                beg = end
+            s = new
+        return s
