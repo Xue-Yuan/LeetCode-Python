@@ -10,7 +10,6 @@ class JointIterater(object):
     def __init__(self, itrA, itrB):
         self.itrA = itrA
         self.itrB = itrB
-        self.preB = float('-inf')
 
     def __iter__(self):
         return self
@@ -18,17 +17,18 @@ class JointIterater(object):
     def next(self):
         itrA, itrB = self.itrA, self.itrB
         valA = next(itrA)
+        curB = next(itrB)
         while True:
-            if valA == self.preB:
+            if valA == curB:
                 return valA
-            elif valA < self.preB:
+            elif valA < curB:
                 valA = next(itrA)
             else:
-                self.preB = next(itrB)
+                curB = next(itrB)
 
 
 if __name__ == '__main__':
-    itrA = iter(range(1, 10))
+    itrA = iter([2,2,4])
     itrB = iter([2,6,10])
     for i in JointIterater(itrA, itrB):
         print i,
