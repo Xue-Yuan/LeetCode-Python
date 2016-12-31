@@ -4,37 +4,35 @@ class Solution(object):
         :type buildings: List[List[int]]
         :rtype: List[List[int]]
         """
-        return self._getSkyline(buildings, 0, len(buildings))
-
-    def _getSkyline(self, A, beg, end):
-        if beg < end:
-            if beg + 1 == end:
-                l, r, h = A[beg][0], A[beg][1], A[beg][2]
-                return [[l, h], [r, 0]]
-            mid = (beg + end) >> 1
-            first = self._getSkyline(A, beg, mid)
-            second = self._getSkyline(A, mid, end)
-            return self._merge(first, second)
-        return []
-
-    def _merge(self, A, B):
-        ans = []
-        i = j = h1 = h2 = 0
-        while i < len(A) and j < len(B):
-            if A[i][0] < B[j][0]:
-                x, h1 = A[i]
-                h = max(h1, h2)
-                i += 1
-            elif A[i][0] > B[j][0]:
-                x, h2 = B[j]
-                h = max(h1, h2)
-                j += 1
+        def get(b, e):
+            if b == e:
+                return [[buildings[b][0], buildings[b][2]], [buildings[b][1], 0]]
+            elif b > e:
+                return []
             else:
-                (x, h1), h2 = A[i], B[j][1]
+                m = (b+e) >> 1
+                first, second = get(b, m), get(m+1, e)
+                return merge(first, second)
+
+        def merge(first, second):
+            ans = []
+            h1 = h2 = idx1 = idx2 = 0
+            while idx1 < len(first) and idx2 < len(second):
+                if first[idx1][0] < second[idx2][0]:
+                    x, h1 = first[idx1]
+                    idx1 += 1
+                elif first[idx1][0] > second[idx2][0]:
+                    x, h2 = second[idx2]
+                    idx2 += 1
+                else:
+                    (x, h1), (_, h2) = first[idx1], second[idx2]
+                    idx1 += 1
+                    idx2 += 1
                 h = max(h1, h2)
-                i, j = i+1, j+1
-            if not ans or ans[-1][1] != h:
-                ans.append([x, h])
-        ans += A[i:]
-        ans += B[j:]
-        return ans
+                if not ans or ans[-1][1] != h:
+                    ans.append([x, h])
+            ans += first[idx1:]
+            ans += second[idx2:]
+            return ans
+
+        return get(0, len(buildings)-1)
