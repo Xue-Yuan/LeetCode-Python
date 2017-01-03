@@ -14,15 +14,13 @@ class Solution(object):
         while curA and curB:
             curA = curA.next
             curB = curB.next
-        if curB:
-            curA, curB = curB, curA
-            headA, headB = headB, headA
         while curA:
             headA = headA.next
             curA = curA.next
-        while headA:
-            if headA == headB:
-                return headA
+        while curB:
+            headB = headB.next
+            curB = curB.next
+        while headA != headB:
             headA = headA.next
             headB = headB.next
-        return None
+        return headA

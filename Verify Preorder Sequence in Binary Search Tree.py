@@ -10,5 +10,5 @@ class Solution(object):
                 return False
             while stk and num > stk[-1]:
                 least = stk.pop()
-            stk.push(num)
+            stk.append(num)
         return True
