@@ -10,30 +10,25 @@ class Solution(object):
         :type head: ListNode
         :rtype: void Do not return anything, modify head in-place instead.
         """
-        # split into two
-        if not head or not head.next:
+        if not head:
             return
-        dummy = pre = ListNode(0)
-        pre.next = head
-        slow = fast = dummy
-        while fast and fast.next:
-            slow = slow.next
+        fast = slow = head
+        while fast.next and fast.next.next:
             fast = fast.next.next
-        dummy.next, slow.next = slow.next, None
-        # reverse the second half
-        pre, ps = dummy, dummy.next
-        while ps.next:
-            p = ps.next
-            ps.next = p.next
-            p.next = pre.next
-            pre.next = p
-        # splice them together
-        cur1, cur2 = head, dummy.next
-        pre = dummy
-        while cur1 or cur2:
-            if cur1:
-                pre.next, cur1 = cur1, cur1.next
+            slow = slow.next
+        pre, cur = None, slow.next
+        slow.next = None
+        while cur:
+            pre, cur.next, cur = cur, pre, cur.next
+        head2 = pre
+
+        pre = ListNode(0)
+        while head or head2:
+            if head:
+                pre.next = head
                 pre = pre.next
-            if cur2:
-                pre.next, cur2 = cur2, cur2.next
+                head = head.next
+            if head2:
+                pre.next = head2
                 pre = pre.next
+                head2 = head2.next
