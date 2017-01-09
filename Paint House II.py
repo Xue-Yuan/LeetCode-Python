@@ -9,15 +9,12 @@ class Solution(object):
         :type costs: List[List[int]]
         :rtype: int
         """
-        if not costs or not costs[0]:
+        if not any(costs):
             return 0
-        n, k = len(costs), len(costs[0])
-        opt = [costs[0][:]] + [[0] * k for _ in range(n-1)]
-        for i in range(1, n):
-            for j in range(k):
-                cost = costs[i][j] + opt[i-1][(j+1)%k]
-                for m in range(k):
-                    if j != m:
-                        cost = min(cost, opt[i-1][m]+costs[i][j])
-                opt[i][j] = cost
-        return min(opt[-1])
+        row, col = len(costs), len(costs[0]) if costs else 0
+        dp = [[0] * col for _ in range(row)]
+        dp[0] = costs[0][:]
+        for i in range(1, row):
+            for j in range(col):
+                dp[i][j] = min(dp[i-1][p] for p in range(col) if j != p) + costs[i][j]
+        return min(dp[-1])

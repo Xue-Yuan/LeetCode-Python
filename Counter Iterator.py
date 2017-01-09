@@ -17,7 +17,7 @@ class CounterIterator(object):
         return self.val
 
     def hasNext(self):
-        while not self.times:
+        while self.times == 0:
             try:
                 self.times = next(self.itr)
                 self.val = next(self.itr)

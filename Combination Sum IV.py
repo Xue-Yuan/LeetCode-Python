@@ -5,18 +5,16 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        m = collections.defaultdict(int)
-        m[0] = 1
+        memo = {0: 1}
 
         def dfs(nums, target):
-            if target in m:
-                return m[target]
-            cnt = 0
-            for num in nums:
-                if num <= target:
-                    cnt += dfs(nums, target-num)
-            m[target] += cnt
-            return cnt
+            if target not in memo:
+                cnt = 0
+                for num in nums:
+                    if target >= num:
+                        cnt += dfs(nums, target - num)
+                memo[target] = cnt
+            return memo[target]
 
         return dfs(nums, target)
 

@@ -20,25 +20,22 @@ predicate里的apply就是起到check的作用，比如说T是Integer，然后�
 
 class Filter(object):
     def __init__(self, iterator, pred):
-        self.hold = False
-        self.val = None
         self.iterator = iterator
         self.pred = pred
-        if iterator.hasNext():
-            self.val = iterator.next()
-            while not pred(self.val) and iterator.hasNext():
-                self.val = iterator.next()
-            self.hold = pred(self.val)
+        self.val = 0
+        self.used = True
 
     def hasNext(self):
-        return self.hold
+        while self.used:
+            if self.iterator.hasNext():
+                self.val = self.iterator.next()
+                if self.pred(self.val):
+                    self.used = False
+                    break
+            else:
+                break
+        return not self.used
 
     def next(self):
-        self.hold = False
-        tmp = self.val
-        if self.iterator.hasNext():
-            self.val = iterator.next()
-            while not self.pred(self.val) and self.iterator.hasNext():
-                self.val = iterator.next()
-            self.hold = pred(self.val)
-        return tmp
+        self.used = True
+        return self.val
