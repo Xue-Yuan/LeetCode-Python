@@ -25,7 +25,7 @@ def check(words, fontSize, totalWidth, totalHeight):
     """
     curHeight = curWidth = 0
     idx = 0
-    while idx < len(words):
+    while idx < len(words) and curHeight <= totalHeight:
         word = words[idx]
         if getWordWidth(word) + curWidth > totalWidth:
             curWidth = 0
