@@ -14,5 +14,5 @@ def solution(nums):
             ans = max(ans, j-i)
             j += 1
         else:
-            i -= 1
+            i += 1
     return ans

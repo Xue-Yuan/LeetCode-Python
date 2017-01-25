@@ -12,7 +12,7 @@ class Solution(object):
             if ch.isdigit():
                 num += ch
             elif ch != ' ':
-                if op in ('+', '-'):
+                if op in '+-':
                     nums.append(m[op](0, int(num)))
                 else:
                     nums[-1] = m[op](nums[-1], int(num))

@@ -25,3 +25,22 @@ class Solution(object):
         ret, path = [], []
         dfs(root, sum)
         return ret
+
+
+class Solution2(object):
+    def pathSum(self, root, total):
+        stk, ans = [], []
+        while stk or root:
+            if root:
+                total -= root.val
+                stk.append((root, False, total))
+                root = root.left
+            else:
+                cur, twice, total = stk.pop()
+                if twice:
+                    if not (cur.left or cur.right) and total == 0:
+                        ans.append([node.val for node, _, _ in stk] + [cur.val])
+                else:
+                    stk.append((cur, True, total))
+                    root = cur.right
+        return ans

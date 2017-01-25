@@ -57,7 +57,7 @@ def findBound(nums, capacity):
         m = (b+e) >> 1
         quickselect(nums, b, e, m)
         less = sum(nums[b:m+1])
-        greater = nums[m] * (len(nums)-m)
+        greater = nums[m] * (len(nums)-m-1)
         if less+greater < capacity:
             return find(m+1, e, capacity-less, nums[m])
         else:
@@ -71,3 +71,4 @@ if __name__ == '__main__':
     print findBound([20, 50], 30)
     print findBound([20, 40, 100], 70)
     print findBound([70, 20, 30, 40, 60], 50)
+    print findBound([30, 30, 50, 70, 42], 200)

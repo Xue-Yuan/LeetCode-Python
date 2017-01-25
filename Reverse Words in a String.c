@@ -34,8 +34,9 @@ void reverseWords(char *s) {
     while (1) {
         if (!s[e] || s[e] == ' ') {
             reverse(s, b, e-1);
-            while (s[e] && s[e] == ' ') { e++; }
-            b = e;
+            while (s[e] && s[e] == ' ') {
+                b = ++e;
+            }
             if (!s[e]) { break; }
         } else {
             e++;
