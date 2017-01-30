@@ -34,6 +34,8 @@ delete_val = {2}
 
 
 def to_delete(node):
+    if not node:
+        return False
     return node.val in delete_val
 
 
@@ -60,6 +62,28 @@ def solution(root):
     return trees
 
 
+def solution2(root):
+    ans = []
+    def dfs(node):
+        if not node:
+            return
+        dfs(node.left)
+        dfs(node.right)
+        if to_delete(node.left):
+            node.left = None
+        if to_delete(node.right):
+            node.right = None
+        if to_delete(node):
+            if node.left:
+                ans.append(node.left)
+            if node.right:
+                ans.append(node.right)
+    dfs(root)
+    if not to_delete(root):
+        ans.append(root)
+    return ans
+
+
 def print_tree(root):
     if not root:
         return
@@ -70,7 +94,7 @@ def print_tree(root):
 
 if __name__ == "__main__":
     root = deserialize("1,2,4,#,#,5,#,#,3,6,#,#,7,#,#")
-    trees = solution(root)
+    trees = solution2(root)
     for node in trees:
         print_tree(node)
         print
