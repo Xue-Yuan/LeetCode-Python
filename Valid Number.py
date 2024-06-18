@@ -1,11 +1,11 @@
-class Solution(object):
-    def isNumber(self, s):
-        """
-        :type s: str
-        :rtype: bool
-        """
-        (init, sign, dot, integer, decimal,
-            exp, exp_sign, exp_integer, invalid) = range(9)
+import re
+
+
+class Solution:
+
+    def isNumber(self, s: str) -> bool:
+        (init, sign, dot, integer, decimal, exp, exp_sign, exp_integer,
+         invalid) = range(9)
         state = init
         for ch in s.strip():
             if state == init:
@@ -71,15 +71,36 @@ class Solution(object):
         return state in (integer, decimal, exp_integer)
 
 
+class Solution2:
+
+    def isNumber(self, s: str) -> bool:
+        p = re.compile(r"^[+-]?"
+                       r"(\d+|\.\d+|\d+\.\d*)"  # 123 | 1.2 | .2
+                       r"([eE][+-]?\d+)?$")
+        return re.match(p, s) != None
+
+
 if __name__ == '__main__':
     solution = Solution()
-    assert(solution.isNumber('1 '))
-    assert(solution.isNumber('123'))
-    assert(solution.isNumber('1.'))
-    assert(solution.isNumber('.1'))
-    assert(solution.isNumber('1.e1'))
-    assert(solution.isNumber('-1.e1'))
-    assert(solution.isNumber('-.1e2'))
-    assert(not solution.isNumber('0..'))
-    assert(not solution.isNumber('e'))
-    assert(not solution.isNumber('1e1.'))
+    assert (solution.isNumber('1'))
+    assert (solution.isNumber('123'))
+    assert (solution.isNumber('1.'))
+    assert (solution.isNumber('.1'))
+    assert (solution.isNumber('1.e1'))
+    assert (solution.isNumber('-1.e1'))
+    assert (solution.isNumber('-.1e2'))
+    assert (not solution.isNumber('0..'))
+    assert (not solution.isNumber('e'))
+    assert (not solution.isNumber('1e1.'))
+
+    solution = Solution2()
+    assert (solution.isNumber('1'))
+    assert (solution.isNumber('123'))
+    assert (solution.isNumber('1.'))
+    assert (solution.isNumber('.1'))
+    assert (solution.isNumber('1.e1'))
+    assert (solution.isNumber('-1.e1'))
+    assert (solution.isNumber('-.1e2'))
+    assert (not solution.isNumber('0..'))
+    assert (not solution.isNumber('e'))
+    assert (not solution.isNumber('1e1.'))
