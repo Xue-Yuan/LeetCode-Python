@@ -1,32 +1,55 @@
-under20 = [
-    "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
-    "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen",
+_thousands = ["", "Thousand", "Million", "Billion", "Trillion"]
+_ones = [
+    "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"
 ]
+_tens = {
+    10: "Ten",
+    11: "Eleven",
+    12: "Twelve",
+    13: "Thirteen",
+    14: "Fourteen",
+    15: "Fifteen",
+    16: "Sixteen",
+    17: "Seventeen",
+    18: "Eighteen",
+    19: "Nineteen",
+    1: "Ten",
+    2: "Twenty",
+    3: "Thirty",
+    4: "Forty",
+    5: "Fifty",
+    6: "Sixty",
+    7: "Seventy",
+    8: "Eighty",
+    9: "Ninety",
+}
 
-between20_100 = [
-    "", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety",
-]
 
-class Solution(object):
-    def numberToWords(self, num):
-        """
-        :type num: int
-        :rtype: str
-        """
-        if num == 0:
-            return 'Zero'
+class Solution:
 
-        def _(num):
-            if num < 20:
-                return under20[num]
-            if num < 100:
-                return (between20_100[num/10] + ' ' + under20[num%10]).strip()
-            if num < 1000:
-                return (_(num/100) + ' Hundred ' + _(num%100)).strip()
-            if num < 1000000:
-                return (_(num/1000) + ' Thousand ' + _(num%1000)).strip()
-            if num < 1000000000:
-                return (_(num/1000000) + ' Million ' + _(num%1000000)).strip()
-            return (_(num/1000000000) + ' Billion ' + _(num%1000000000)).strip()
+    def numberToWords(self, num: int) -> str:
+        if not num:
+            return "Zero"
 
-        return _(num)
+        def lessThanThousand(num: int) -> str:
+            if num < 10:
+                return _ones[num]
+            if 10 <= num < 20:
+                return _tens[num]
+            if 20 <= num < 100:
+                return f"{_tens[num//10]} {_ones[num%10]}".strip()
+            hundred = num // 100
+            tens = lessThanThousand(num % 100)
+            return f"{_ones[hundred]} Hundred {tens}".strip()
+
+        ans = []
+        thousand_cnt = 0
+        while num:
+            h = num % 1000
+            if h:
+                if thousand_cnt:
+                    ans.append(_thousands[thousand_cnt])
+                ans.append(lessThanThousand(h))
+            num //= 1000
+            thousand_cnt += 1
+        return " ".join(reversed(ans))
