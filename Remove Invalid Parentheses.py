@@ -1,15 +1,15 @@
-class Solution(object):
+class Solution:
     """As much as I love the solution, it cannot get rid of duplicates
     without relying on dictionary.
     """
 
-    def removeInvalidParentheses(self, s):
+    def removeInvalidParentheses(self, s: str):
         """
         :type s: str
         :rtype: List[str]
         """
 
-        def isValid(s):
+        def isValid(s: str):
             cnt = 0
             for ch in s:
                 cnt += ch == '('
