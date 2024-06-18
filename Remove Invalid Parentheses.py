@@ -1,12 +1,14 @@
 class Solution(object):
-    """As long as I love the solution, it cannot get rid of duplicates
+    """As much as I love the solution, it cannot get rid of duplicates
     without relying on dictionary.
     """
+
     def removeInvalidParentheses(self, s):
         """
         :type s: str
         :rtype: List[str]
         """
+
         def is_valid(s):
             cnt = 0
             for ch in s:
@@ -15,20 +17,22 @@ class Solution(object):
                 if cnt < 0:
                     return False
             return cnt == 0
+
         lvl = {s}
         while lvl:
             valid = filter(is_valid, lvl)
             if valid:
                 return valid
             lvl = {
-                s[:i] + s[i+1:] for s in lvl
-                for i in range(len(s))
-                if i == 0 or s[i] != s[i-1]
+                s[:i] + s[i + 1:]
+                for s in lvl
+                for i in range(len(s)) if i == 0 or s[i] != s[i - 1]
             }
         return []
 
 
 class Solution2(object):
+
     def removeInvalidParentheses(self, s):
         """
         :type s: str
@@ -48,11 +52,11 @@ class Solution2(object):
                     ans.append(s)
                 return ans
             for i in range(beg, len(s)):
-                if i == 0 or s[i] != s[i-1]:
+                if i == 0 or s[i] != s[i - 1]:
                     if left > 0 and s[i] == '(':
-                        dfs(s[:i]+s[i+1:], i, left-1, right)
+                        dfs(s[:i] + s[i + 1:], i, left - 1, right)
                     if right > 0 and s[i] == ')':
-                        dfs(s[:i]+s[i+1:], i, left, right-1)
+                        dfs(s[:i] + s[i + 1:], i, left, right - 1)
             return ans
 
         return dfs(s, 0, left, right)
@@ -65,3 +69,33 @@ class Solution2(object):
             if cnt < 0:
                 return False
         return cnt == 0
+
+
+class Solution3:
+
+    def removeInvalidParentheses(self, s: str) -> List[str]:
+        ans = []
+
+        def remove(s: str, last_checked_idx: int, last_removed_idx: int,
+                   open: str, close: str):
+            open_cnt = close_cnt = 0
+            for i in range(last_checked_idx, len(s)):
+                if s[i] == open:
+                    open_cnt += 1
+                if s[i] == close:
+                    close_cnt += 1
+                if open_cnt >= close_cnt:
+                    continue
+                for j in range(last_removed_idx, i + 1):
+                    if s[j] == close and (j == last_removed_idx
+                                          or s[j] != s[j - 1]):
+                        remove(s[:j] + s[j + 1:], i, j, open, close)
+                return
+            r = s[::-1]
+            if open == "(":
+                remove(r, 0, 0, ")", "(")
+            else:
+                ans.append(r)
+
+        remove(s, 0, 0, "(", ")")
+        return ans
