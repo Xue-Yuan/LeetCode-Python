@@ -32,12 +32,10 @@ class Solution:
 class Solution2:
 
     def subarraysWithKDistinct(self, nums: List[int], k: int) -> int:
-        # Declare a map for the frequency
         cntr = collections.Counter()
         begin, prefix, cnt = 0, 0, 0
         res = 0
 
-        # Traverse the array
         for num in nums:
             # Increase the frequency
             cntr[num] += 1
