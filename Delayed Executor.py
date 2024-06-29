@@ -1,7 +1,7 @@
 import asyncio
 import collections
 import heapq
-from typing import Callable, Tuple, Dict, Any, Optional
+from typing import Callable, Any, Optional
 
 Task = collections.namedtuple(
     "Task", ["start_time", "task_id", "func", "args", "kwargs"])
@@ -10,31 +10,29 @@ Task = collections.namedtuple(
 class AsyncTaskExecutor:
 
     def __init__(self):
-        self.tasks = []  # Heap queue to manage tasks
-        # Lock for thread-safe operations on the heap
-        self.tasks_lock = asyncio.Lock()
+        # Heap queue to manage tasks
+        self.tasks = []
+        self.lock = asyncio.Lock()
         # Condition variable for efficient scheduling
-        self.condition = asyncio.Condition(self.tasks_lock)
+        self.condition = asyncio.Condition(self.lock)
         # To maintain unique task IDs for cancellation
-        self.task_counter_lock = asyncio.Lock()
         self.task_counter = 0
         self.loop = asyncio.get_event_loop()
 
-    async def _new_task_id(self):
-        async with self.task_counter_lock:
-            self.task_counter += 1
-            return self.task_counter
+    def _new_task_id(self):
+        self.task_counter += 1
+        return self.task_counter
 
     async def _schedule_next_locked(self) -> Optional[float]:
-        assert self.tasks_lock.locked()
+        assert self.lock.locked()
         while self.tasks:
             task = self.tasks[0]
             now = self.loop.time()
-            if now >= task.start_time:
-                task = heapq.heappop(self.tasks)
+            if task.start_time <= now:
+                heapq.heappop(self.tasks)
                 asyncio.create_task(task.func(*task.args, **task.kwargs))
             else:
-                return task.start_time - now
+                return now - task.start_time
         return None
 
     async def _loop(self):
@@ -42,37 +40,35 @@ class AsyncTaskExecutor:
             async with self.condition:
                 wait_time = await self._schedule_next_locked()
                 if wait_time is None:
-                    # Wait until notified of a new task
                     await self.condition.wait()
                 else:
                     try:
                         await asyncio.wait_for(self.condition.wait(),
                                                timeout=wait_time)
                     except TimeoutError:
-                        print(f'wait_time={wait_time} has passed!')
+                        pass
 
     async def schedule_task(self, timestamp: float, func: Callable, *args: Any,
                             **kwargs: Any) -> int:
-        """Schedule a task to be run at a specific timestamp in the future."""
         async with self.condition:
-            task_id = await self._new_task_id()
-            heapq.heappush(self.tasks,
-                           Task(timestamp, task_id, func, args, kwargs))
+            task = Task(timestamp, self._new_task_id(), func, args, kwargs)
+            heapq.heappush(self.tasks, task)
             self.condition.notify()
-        return task_id
+        return task.task_id
 
     async def cancel_task(self, task_id: int) -> bool:
         """Cancel a scheduled task if it hasn't started."""
-        async with self.condition:
+        async with self.lock:
             for i, task in enumerate(self.tasks):
-                if task.task_id == task_id:
-                    self.tasks.pop(i)
-                    heapq.heapify(self.tasks)
-                    self.condition.notify()
-                    return True
-        return False
+                if task.task_id != task_id:
+                    continue
+                self.tasks[i] = self.tasks[-1]
+                self.tasks.pop()
+                heapq.heapify(self.tasks)
+                return True
+            return False
 
-    def start(self):
+    def start(self) -> None:
         asyncio.create_task(self._loop())
 
 
@@ -88,10 +84,10 @@ async def timer(end: int):
         await asyncio.sleep(1)
         if cnt >= end:
             break
+    print(f'{end} seconds passed. End.')
 
 
 async def main():
-
     executor = AsyncTaskExecutor()
     executor.start()
 
@@ -112,7 +108,7 @@ async def main():
     cancelled = await executor.cancel_task(task_id)
     print(f"task_id={task_id} cancelled={cancelled}")
 
-    await timer(end=30)
+    await timer(end=15)
 
 
 if __name__ == '__main__':
