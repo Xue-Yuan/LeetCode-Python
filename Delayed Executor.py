@@ -8,6 +8,15 @@ Task = collections.namedtuple(
 
 
 class AsyncTaskExecutor:
+    """Basic ideas:
+    1. Start an event loop, which keeps polling the heap for the task that's
+    scheduled in the nearest future. If no task, wait for new tasks being
+    added.
+    2. Add new tasks into a min heap based on the task start time. If a task
+    can be scheduled, pop it out of the heap and run it.
+    3. To cancel a task, iterate through the heap, match the task id, and pop
+    it out of the heap.
+    """
 
     def __init__(self):
         # Heap queue to manage tasks
