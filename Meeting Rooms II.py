@@ -7,17 +7,20 @@ For example,
     Given [[0, 30],[5, 10],[15, 20]],
     return 2.
 """
+from typing import List
 import heapq
 
 
-class Interval(object):
-    def __init__(self, start=0, end=0):
+class Interval:
+
+    def __init__(self, start: int = 0, end: int = 0):
         self.start = start
         self.end = end
 
 
 class Solution(object):
-    def minMeetingRooms(self, intervals):
+
+    def minMeetingRooms(self, intervals: List[Interval]):
         intervals.sort(key=lambda x: x.start)
         pq = [-1]
         for interval in intervals:
@@ -30,4 +33,4 @@ class Solution(object):
 if __name__ == "__main__":
     intervals = [Interval(0, 30), Interval(5, 10), Interval(15, 20)]
     s = Solution()
-    print s.minMeetingRooms(intervals)
+    print(s.minMeetingRooms(intervals))
