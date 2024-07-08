@@ -4,23 +4,23 @@ from collections import defaultdict
 
 class RateLimiter:
 
-    def __init__(self, rate, per):
-        self.rate = rate
-        self.per = per
-        self.allowance = defaultdict(lambda: rate)
+    def __init__(self, max_capacity, max_rate):
+        self.max_capacity = max_capacity
+        self.max_rate = max_rate
+        self.allowance = defaultdict(lambda: max_capacity)
         self.last_check = defaultdict(time.time)
 
     def is_allowed(self, id):
         current_time = time.time()
         elapsed = current_time - self.last_check[id]
         self.last_check[id] = current_time
-        refill = elapsed * (self.rate / self.per)
+        refill = elapsed * (self.max_capacity / self.max_rate)
         if refill > 0:
             self.allowance[id] += refill
             print(f"allowance={self.allowance[id]}, refill={refill}")
 
-        if self.allowance[id] > self.rate:
-            self.allowance[id] = self.rate  # enforce maximum rate
+        if self.allowance[id] > self.max_capacity:
+            self.allowance[id] = self.max_capacity  # enforce maximum max_capacity
 
         if self.allowance[id] < 1.0:
             return False
