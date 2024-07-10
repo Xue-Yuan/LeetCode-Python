@@ -20,7 +20,8 @@ class RateLimiter:
             print(f"allowance={self.allowance[id]}, refill={refill}")
 
         if self.allowance[id] > self.max_capacity:
-            self.allowance[id] = self.max_capacity  # enforce maximum max_capacity
+            self.allowance[
+                id] = self.max_capacity  # enforce maximum max_capacity
 
         if self.allowance[id] < 1.0:
             return False
