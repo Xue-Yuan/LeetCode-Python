@@ -1,17 +1,11 @@
-class Solution(object):
-    def findPeakElement(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        nums = [float('-inf')] + nums + [float('-inf')]
-        b, e = 1, len(nums)
-        while b < e:
-            m = (b+e) >> 1
-            if nums[m-1] < nums[m] > nums[m+1]:
-                return m-1
-            if nums[m-1] < nums[m] < nums[m+1]:
-                b = m+1
+class Solution:
+
+    def findPeakElement(self, nums: List[int]) -> int:
+        l, h = 0, len(nums)
+        while l < h:
+            mid = (l + h) >> 1
+            if mid + 1 == len(nums) or nums[mid] > nums[mid + 1]:
+                h = mid
             else:
-                e = m
-        return -1
+                l = mid + 1
+        return l
