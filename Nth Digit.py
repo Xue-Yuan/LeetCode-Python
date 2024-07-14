@@ -6,6 +6,7 @@
 
 
 class Solution:
+
     def findNthDigit(self, n: int) -> int:
         l, h = 1, 9
         bucket_range = 9
@@ -17,10 +18,9 @@ class Solution:
             digit_cnt += 1
             bucket_range = (h - l + 1) * digit_cnt
         # 0-based within bucket [l, h]
-        ith_number, ith_digit = divmod(n-1, digit_cnt)
+        ith_number, ith_digit = divmod(n - 1, digit_cnt)
         num = l + ith_number
         return int(str(num)[ith_digit])
-
 
 
 if __name__ == '__main__':
