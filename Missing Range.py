@@ -3,15 +3,16 @@ from typing import List
 
 class Solution:
 
-    def findMissingRanges(self, nums: List[int], lower: int, upper: int):
-        expected = lower
+    def findMissingRanges(self, nums: List[int], lower: int,
+                          upper: int) -> List[List[int]]:
         ans = []
-        for num in nums + [upper + 1]:
-            if num == expected + 1:
-                ans.append(str(expected))
-            elif num > expected + 1:
-                ans.append('{}->{}'.format(expected, num - 1))
+        expected = lower
+        for num in nums:
+            if num > expected:
+                ans.append([expected, num - 1])
             expected = num + 1
+        if expected < upper:
+            ans.append([expected, upper])
         return ans
 
 
