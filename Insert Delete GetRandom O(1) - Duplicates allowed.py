@@ -30,10 +30,10 @@ class RandomizedCollection(object):
         pos = m[val].pop()
         if not m[val]:
             del m[val]
-        if pos != len(arr)-1:
+        if pos != len(arr) - 1:
             arr[pos] = arr[-1]
             m[arr[-1]].add(pos)
-            m[arr[-1]].discard(len(arr)-1)
+            m[arr[-1]].discard(len(arr) - 1)
         arr.pop()
         return True
 

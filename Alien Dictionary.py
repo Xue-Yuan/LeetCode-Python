@@ -10,10 +10,6 @@ import itertools
 class Solution:
 
     def alienOrder(self, words: List[str]):
-        """
-        :type words: List[str]
-        :rtype: str
-        """
         charset = set(''.join(words))
         indegrees = {x: 0 for x in charset}
         graph = {x: [] for x in charset}
@@ -36,8 +32,9 @@ class Solution:
                 indegrees[nxt] -= 1
                 if indegrees[nxt] == 0:
                     q.append(nxt)
-            del graph[cur]
-        return ans if not graph else ''
+        if any(val != 0 for _, val in indegrees.items()):
+            return ''
+        return ans
 
 
 if __name__ == '__main__':
