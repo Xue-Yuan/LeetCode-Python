@@ -14,11 +14,10 @@ class Solution:
                 cur = ""
                 if formula[i].isupper():
                     cur += formula[i]
-                    for j in range(i + 1, l):
-                        i = j
-                        if not formula[j].islower():
+                    for i in range(i + 1, l):
+                        if not formula[i].islower():
                             break
-                        cur += formula[j]
+                        cur += formula[i]
                     else:
                         i += 1
                     num, i = self.getNum(formula, i)
