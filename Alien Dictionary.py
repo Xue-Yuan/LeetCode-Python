@@ -23,7 +23,7 @@ class Solution:
                 if len(w1) > len(w2):
                     return ''
 
-        q = collections.deque(k for k in charset if indegrees[k] == 0)
+        q = collections.deque(k for k in indegrees if indegrees[k] == 0)
         ans = ''
         while q:
             cur = q.popleft()
