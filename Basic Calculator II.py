@@ -42,8 +42,6 @@ class Solution2:
         for ch in s:
             if ch.isdigit():
                 num = num * 10 + int(ch)
-            elif ch == " ":
-                continue
             elif ch in "+-*/":
                 self.update(stk, sign, num)
                 sign = ch
