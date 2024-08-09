@@ -23,19 +23,20 @@ class Solution2:
 
     def missingElement(self, nums: List[int], k: int) -> int:
 
-        def missing_cnt(i: int, j: int) -> int:
-            return nums[j] - nums[i] - (j - i)
+        def missing_cnt(i: int) -> int:
+            return nums[i] - nums[0] - i
 
-        l, r = 0, len(nums)
-        while l < r - 1:
-            m = (l + r) // 2
-            cnt = missing_cnt(l, m)
-            if cnt >= k:
-                r = m
+        n = len(nums)
+        if k > missing_cnt(n - 1):
+            return nums[n - 1] + k - missing_cnt(n - 1)
+        l, r = 0, n - 1
+        while l < r:
+            mid = (l + r) >> 1
+            if missing_cnt(mid) >= k:
+                r = mid
             else:
-                k -= cnt
-                l = m
-        return nums[l] + k
+                l = mid + 1
+        return nums[l - 1] + k - missing_cnt(l - 1)
 
 
 if __name__ == '__main__':
