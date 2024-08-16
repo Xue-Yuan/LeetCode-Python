@@ -2,6 +2,7 @@ import heapq
 
 
 class Interval(object):
+
     def __init__(self, dist):
         self.dist = dist
         self.gasCnt = 0
@@ -10,7 +11,7 @@ class Interval(object):
         return self.gap() > other.gap()
 
     def gap(self):
-        return float(self.dist) / (self.gasCnt+1)
+        return float(self.dist) / (self.gasCnt + 1)
 
 
 def solution(intervals, k):
@@ -19,7 +20,7 @@ def solution(intervals, k):
         cur = heapq.heappop(intervals)
         cur.gasCnt += 1
         heapq.heappush(intervals, cur)
-    return heapq[0].gap()
+    return intervals[0].gap()
 
 
 if __name__ == '__main__':
